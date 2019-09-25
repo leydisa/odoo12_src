@@ -17,6 +17,7 @@
         'data/sequence.xml',
 
         'security/security.xml',
+        'security/ir.model.access.csv',
 
         'report/report.xml',
         'report/rp_work_order.xml',
