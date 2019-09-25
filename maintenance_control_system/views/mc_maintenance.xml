@@ -228,7 +228,7 @@
                     <field name="partner_id"/>
                     <separator/>
                     <group expand="0" string="Group By">
-                        <filter string="State" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="State" name='state' domain="[]" context="{'group_by':'partner_id'}"/>
                     </group>
                 </search>
             </field>
@@ -245,7 +245,7 @@
                     <field name="state"/>
                     <separator/>
                     <group expand="0" string="Group By">
-                        <filter string="State" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="State" name='state' domain="[]" context="{'group_by':'partner_id'}"/>
                     </group>
                 </search>
             </field>

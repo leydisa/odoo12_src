@@ -92,14 +92,14 @@
             <field name="name">mc.contract.search</field>
             <field name="model">mc.contract</field>
             <field name="arch" type="xml">
-                <search>
+                <search string="Contract">
                     <field name="code"/>
                     <field name="description"/>
                     <field name="date"/>
                     <field name="partner_id"/>
                     <separator/>
                     <group expand="0" string="Group By">
-                        <filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Customer" name="customer" domain="[]" context="{'group_by':'partner_id'}"/>
                     </group>
                 </search>
             </field>
