@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.maintenance views-->
+        <record id="view_mc_maintenance_received_tree" model="ir.ui.view">
+            <field name="name">view.mc.maintenance.received.tree</field>
+            <field name="model">mc.maintenance</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="entity_id"/>
+                    <field name="partner_id" string="Supplier"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_internal_maintenance_provided_tree" model="ir.ui.view">
+            <field name="name">view.mc.internal.maintenance.provided.tree</field>
+            <field name="model">mc.maintenance</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="entity_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_external_maintenance_provided_tree" model="ir.ui.view">
+            <field name="name">view.mc.external.maintenance.provided.tree</field>
+            <field name="model">mc.maintenance</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_maintenance_received_form" model="ir.ui.view">
+            <field name="name">view.mc.maintenance.received.form</field>
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+                        <button name="action_finalized" states="edition" string="Finalized" type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="code" colspan="2"/>
+                            <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <separator colspan="2"/>
+                            <field name="user_id" colspan="2"/>
+                            <field name="datetime_start" colspan="2"
+                                   attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <hr colspan="4"/>
+                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
+                            <hr colspan="4"/>
+                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   domain="[('supplier', '=', True)]" string="Supplier" required="1"
+                                   options='{"no_open": True, "no_create": True}'/>
+                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="province_id" colspan="2"/>
+                            <hr colspan="4"/>
+                            <separator colspan="2"/>
+                            <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="invoice" filename="invoice_filename" colspan="4" required="1" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        </group>
+                        <group string="Labor" col="4">
+                                <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_hours" widget='float_time' colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_id" invisible="1"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Equipment">
+                                <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id"/>
+                                        <field name="qty"/>
+                                        <field name="maintenance_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="coste_cuc" widget="monetary"/>
+                                    <field name="coste_cup" widget="monetary"/>
+                                    <field name="mt"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mc_internal_maintenance_provided_form" model="ir.ui.view">
+            <field name="name">view.mc.internal.maintenance.provided.form</field>
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+                        <button name="action_finalized" states="edition" string="Finalized" type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="code" colspan="2"/>
+                            <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <separator colspan="2"/>
+                            <field name="user_id" colspan="2"/>
+                            <field name="datetime_start" colspan="2"
+                                   attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <hr colspan="4"/>
+                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
+                            <hr colspan="4"/>
+                            <separator colspan="2"/>
+                            <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                        </group>
+                        <group string="Labor" col="4">
+                                <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_hours" widget='float_time' colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_id" invisible="1"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Lines">
+                                <field name="line_ids" nolabel="1"
+                                       attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id"/>
+                                        <field name="qty"/>
+                                        <field name="maintenance_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="coste_cuc"/>
+                                    <field name="coste_cup"/>
+                                    <field name="mt"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mc_external_maintenance_provided_form" model="ir.ui.view">
+            <field name="name">view.mc.external.maintenance.provided.form</field>
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="Work Order">
+                    <header>
+                        <button name="action_finalized" states="edition" string="Finalized" type="object"
+                                class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="edition, finalized"/>
+                    </header>
+                    <sheet>
+                        <group col="4">
+                            <field name="code" colspan="2"/>
+                            <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <separator colspan="2"/>
+                            <field name="user_id" colspan="2"/>
+                            <field name="datetime_start" colspan="2"
+                                   attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <hr colspan="4"/>
+                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   domain="[('supplier', '=', False), ('type', '=', 'external')]" string="Customer"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"
+                                   required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="province_id" colspan="2"/>
+                            <hr colspan="4"/>
+                            <separator colspan="2"/>
+                            <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="invoice" filename="invoice_filename" required="1" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="workorder_id" colspan="4"/>
+                        </group>
+                        <group string="Labor" col="4">
+                                <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_hours" widget='float_time' colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                                <field name="labor_id" invisible="1"/>
+                        </group>
+                        <notebook colspan="4">
+                            <page string="Lines">
+                                <field name="line_ids" nolabel="1"
+                                       attrs="{'readonly': [('state','=', 'finalized')]}">
+                                    <tree editable="bottom">
+                                        <field name="equipment_id" options='{"no_open": True, "no_create": True}'/>
+                                        <field name="qty"/>
+                                        <field name="maintenance_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="coste_cuc"/>
+                                    <field name="coste_cup"/>
+                                    <field name="mt"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mc_maintenance_received_search" model="ir.ui.view">
+            <field name="name">mc.maintenance.received.search</field>
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_mc_maintenance_provided_search" model="ir.ui.view">
+            <field name="name">mc.maintenance.provided.search</field>
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_mc_maintenance_received" model="ir.actions.act_window">
+            <field name="name">Maintenance Received</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.maintenance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('supplier', '=', True)]</field>
+            <field name="context">{'supplier' : True}</field>
+            <field name="search_view_id" ref="view_mc_maintenance_received_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+
+        <record id="action_mc_maintenance_received_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence">1</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_mc_maintenance_received_tree"/>
+            <field name="act_window_id" ref="action_mc_maintenance_received"/>
+        </record>
+
+        <record id="action_mc_maintenance_received_view_form" model="ir.actions.act_window.view">
+            <field name="sequence">2</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_mc_maintenance_received_form"/>
+            <field name="act_window_id" ref="action_mc_maintenance_received"/>
+        </record>
+
+
+        <record id="action_mc_internal_maintenance_provided" model="ir.actions.act_window">
+            <field name="name">Internal Maintenance Provided</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.maintenance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('supplier', '=', False), ('type', '=', 'internal')]</field>
+            <field name="context">{'supplier' : False, 'type': 'internal'}</field>
+            <field name="search_view_id" ref="view_mc_maintenance_provided_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_mc_internal_maintenance_provided_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence">1</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_mc_internal_maintenance_provided_tree"/>
+            <field name="act_window_id" ref="action_mc_internal_maintenance_provided"/>
+        </record>
+
+        <record id="action_mc_internal_maintenance_provided_view_form" model="ir.actions.act_window.view">
+            <field name="sequence">2</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_mc_internal_maintenance_provided_form"/>
+            <field name="act_window_id" ref="action_mc_internal_maintenance_provided"/>
+        </record>
+
+
+        <record id="action_mc_external_maintenance_provided" model="ir.actions.act_window">
+            <field name="name">External Maintenance Provided</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.maintenance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('supplier', '=', False), ('type', '=', 'external')]</field>
+            <field name="context">{'supplier' : False, 'type': 'external'}</field>
+            <field name="search_view_id" ref="view_mc_maintenance_provided_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_mc_external_maintenance_provided_view_tree" model="ir.actions.act_window.view">
+            <field name="sequence">1</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_mc_external_maintenance_provided_tree"/>
+            <field name="act_window_id" ref="action_mc_external_maintenance_provided"/>
+        </record>
+
+        <record id="action_mc_external_maintenance_provided_view_form" model="ir.actions.act_window.view">
+            <field name="sequence">2</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_mc_external_maintenance_provided_form"/>
+            <field name="act_window_id" ref="action_mc_external_maintenance_provided"/>
+        </record>
+    </data>
+</odoo>

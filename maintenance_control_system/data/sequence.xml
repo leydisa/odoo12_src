@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- mc_partner_sequence -->
+        <record id="sequence_mc_internal_customer" model="ir.sequence">
+            <field name="name">MC Internal Customer Sequence</field>
+            <field name="code">mc.internal.customer.sequence</field>
+            <field name="prefix">CLI</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="sequence_mc_external_customer" model="ir.sequence">
+            <field name="name">MC External Customer Sequence</field>
+            <field name="code">mc.external.customer.sequence</field>
+            <field name="prefix">CLE</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="sequence_mc_supplier" model="ir.sequence">
+            <field name="name">MC Supplier Sequence</field>
+            <field name="code">mc.supplier.sequence</field>
+            <field name="prefix">PR</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">4</field>
+        </record>
+
+        <!-- mc.contract sequences -->
+        <record id="sequence_customer_contract" model="ir.sequence">
+            <field name="name">Customer Contract Sequence</field>
+            <field name="code">mc.customer.contract.sequence</field>
+            <field name="prefix">CC/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="sequence_supplier_contract" model="ir.sequence">
+            <field name="name">Supplier Contract Sequence</field>
+            <field name="code">mc.supplier.contract.sequence</field>
+            <field name="prefix">CP/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+        <!-- mc.work.order sequences -->
+        <record id="sequence_work_order" model="ir.sequence">
+            <field name="name">Work Order Sequence</field>
+            <field name="code">mc.work.order.sequence</field>
+            <field name="prefix">OT/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+        <!-- mc.maintenance sequences -->
+        <record id="sequence_maintenance_received_order" model="ir.sequence">
+            <field name="name">Maintenance Received Sequence</field>
+            <field name="code">mc.maintenance.received.sequence</field>
+            <field name="prefix">MR/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="sequence_internal_maintenance_provided_order" model="ir.sequence">
+            <field name="name">Internal Maintenance Provided Sequence</field>
+            <field name="code">mc.internal.maintenance.provided.sequence</field>
+            <field name="prefix">MBI/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+        <record id="sequence_external_maintenance_provided_order" model="ir.sequence">
+            <field name="name">External Maintenance Provided Sequence</field>
+            <field name="code">mc.external.maintenance.provided.sequence</field>
+            <field name="prefix">MBE/%(year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">3</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mc.budget views-->
+        <record id="view_mc_budget_tree" model="ir.ui.view">
+            <field name="name">view.mc.budget.tree</field>
+            <field name="model">mc.budget</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Material">
+                    <field name="year"/>
+                    <field name="budget_provided_cuc"/>
+                    <field name="budget_provided_cuc"/>
+                    <field name="budget_received_cuc"/>
+                    <field name="budget_received_cup"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_mc_budget_form" model="ir.ui.view">
+            <field name="name">view.mc.budget.form</field>
+            <field name="model">mc.budget</field>
+            <field name="arch" type="xml">
+                <form string="Material">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="year"/>
+                            </group>
+                            <group/>
+                            <group/>
+                        </group>
+                        <group string="For Maintenance Provided" col="4">
+                            <field name="budget_provided_cuc"/>
+                            <field name="budget_provided_cup"/>
+                            <field name="used_provided_cuc"/>
+                            <field name="used_provided_cup"/>
+                            <field name="percent_provided_cuc" widget="progressbar"/>
+                            <field name="percent_provided_cup" widget="progressbar"/>
+                        </group>
+                        <group string="For Maintenance Received" col="4">
+                            <field name="budget_received_cuc"/>
+                            <field name="budget_received_cup"/>
+                            <field name="used_received_cuc"/>
+                            <field name="used_received_cup"/>
+                            <field name="percent_received_cuc" widget="progressbar"/>
+                            <field name="percent_received_cup" widget="progressbar"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_mc_budget" model="ir.actions.act_window">
+            <field name="name">Budget</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mc.budget</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
+
+    </data>
+</odoo>
