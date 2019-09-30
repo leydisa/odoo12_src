@@ -25,7 +25,7 @@ class McMaintenance(models.Model):
     @api.model
     def _default_current_labor_coste(self):
         """
-        Calculate the current price of labor.
+        Calculate the current cost of labor for maintenance provided.
         :return:
         """
         labor = self.env['mc.labor'].search([], limit=1, order='date desc')
@@ -107,7 +107,7 @@ class McMaintenance(models.Model):
     workorder_id = fields.Many2one('mc.work.order',
                                    'Work Order',
                                    readonly=True,
-                                   ondelete='restrict',)
+                                   ondelete='restrict')
     labor_id = fields.Many2one('mc.labor',
                                string="Labor",
                                default=_default_current_labor_coste,
@@ -130,24 +130,24 @@ class McMaintenance(models.Model):
     def _onchange_partner_id(self):
         self.contract_id = False
 
-    @api.one
-    def action_finalized(self):
-        """
-        Generate the code.
-        Update the budget used.
-        :return:
-        """
-        # Generate the code
-        if self.supplier:
-            self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')
-        else:
-            self.code = self.env['ir.sequence'].next_by_code('mc.%s.maintenance.provided.sequence' % self.type)
-        # Update the budget used
-        if self.supplier:
-            self.env['mc.budget'].add_maintenance_received(self.date, self.coste_cuc, self.coste_cup)
-        else:
-            self.env['mc.budget'].add_maintenance_provided(self.date, self.coste_cuc, self.coste_cup)
-        return super(McMaintenance, self).action_finalized()
+    # @api.one
+    # def action_finalized(self):
+    #     """
+    #     Generate the code.
+    #     Update the budget used.
+    #     :return:
+    #     """
+    #     # Generate the code
+    #     if self.supplier:
+    #         self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')
+    #     else:
+    #         self.code = self.env['ir.sequence'].next_by_code('mc.%s.maintenance.provided.sequence' % self.type)
+    #     # Update the budget used
+    #     if self.supplier:
+    #         self.env['mc.budget'].add_maintenance_received(self.date, self.coste_cuc, self.coste_cup)
+    #     else:
+    #         self.env['mc.budget'].add_maintenance_provided(self.date, self.coste_cuc, self.coste_cup)
+    #     return super(McMaintenance, self).action_finalized()
 
 
 class McMaintenanceLine(models.Model):

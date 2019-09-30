@@ -4,8 +4,8 @@
 {
     'name': 'Maintenance Control System',
     'version': '1.0',
-    'summary': 'Maintenance Control System',
-    'description': "",
+    'summary': 'Maintenance Control',
+    'description': "Maintenance Control",
     'website': 'https://www.example.com',
     'depends': [],
     'category': 'maintenance_control_system',
@@ -28,7 +28,6 @@
         'views/mc_material.xml',
         'views/mc_equipement.xml',
         'views/mc_labor.xml',
-        'views/mc_budget.xml',
         'views/mc_work_order.xml',
         'views/mc_maintenance.xml',
         'views/maintenance_control.xml',

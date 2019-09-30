@@ -49,6 +49,30 @@
                                     <field name="email" colspan="2" widget="email"/>
                                 </group>
                             </page>
+                            <page string="Budget" attrs="{'invisible': [('supplier','=', True)]}">
+                                <group>
+                                    <field name="budget_to_received_ids">
+                                        <tree editable="bottom">
+                                            <field name="year"/>
+                                            <field name="budget_cuc"/>
+                                            <field name="budget_cup"/>
+                                            <field name="used_cuc"/>
+                                            <field name="used_cup"/>
+                                            <field name="entity_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                    <field name="budget_to_provided_ids">
+                                        <tree editable="bottom">
+                                            <field name="year"/>
+                                            <field name="budget_cuc"/>
+                                            <field name="budget_cup"/>
+                                            <field name="used_cuc"/>
+                                            <field name="used_cup"/>
+                                            <field name="entity_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
                         </notebook>
                         <field name="supplier" invisible="1"/>
                         <field name="type" invisible="1"/>
@@ -78,7 +102,7 @@
         </record>
 
         <record id="action_mc_partner_internal_customer" model="ir.actions.act_window">
-            <field name="name">Internal Customers</field>
+            <field name="name">Entity</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mc.partner</field>
             <field name="view_type">form</field>
@@ -89,7 +113,7 @@
         </record>
 
         <record id="action_mc_partner_external_customer" model="ir.actions.act_window">
-            <field name="name">External Customers</field>
+            <field name="name">Customers</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mc.partner</field>
             <field name="view_type">form</field>

@@ -9,8 +9,11 @@ access_mc_province_user,mc.province,model_mc_province,group_mc_user,1,1,1,1
 access_mc_labor_admin,mc.labor,model_mc_labor,group_mc_adm,1,1,1,1
 access_mc_labor_user,mc.labor,model_mc_labor,group_mc_user,1,1,1,1
 ,,,,,
-access_mc_budget_admin,mc.budget,model_mc_budget,group_mc_adm,1,1,1,1
-access_mc_budget_user,mc.budget,model_mc_budget,group_mc_user,1,1,1,1
+access_mc_budget_to_received_admin,mc.budget.to.received,model_mc_budget_to_received,group_mc_adm,1,1,1,1
+access_mc_budget_to_received_user,mc.budget.to.received,model_mc_budget_to_received,group_mc_user,1,1,1,1
+,,,,,
+access_mc_budget_to_provided_admin,mc.budget.to.provided,model_mc_budget_to_provided,group_mc_adm,1,1,1,1
+access_mc_budget_to_provided_user,mc.budget.to.provided,model_mc_budget_to_provided,group_mc_user,1,1,1,1
 ,,,,,
 access_mc_partner_admin,mc.partner,model_mc_partner,group_mc_adm,1,1,1,1
 access_mc_partner_user,mc.partner,model_mc_partner,group_mc_user,1,1,1,1

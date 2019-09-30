@@ -24,9 +24,9 @@ class McLabor(models.Model):
                        required=True,
                        index=True,
                        default=_get_default_date)
-    coste_cuc = fields.Float(string='Coste (CUC)',
+    coste_cuc = fields.Float(string='CUC',
                              required=True)
-    coste_cup = fields.Float(string='Coste (CUP)',
+    coste_cup = fields.Float(string='CUP',
                              required=True)
 
     _sql_constraints = [
