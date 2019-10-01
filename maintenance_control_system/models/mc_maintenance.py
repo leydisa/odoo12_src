@@ -23,11 +23,37 @@ class McMaintenance(models.Model):
         return '{}-01-01'.format(date)
 
     @api.model
+    def _domain_partner_id(self):
+        """
+        Returns a domain of the assets valuated by appraiser.
+            [('id', 'in', [ids])]
+        """
+        dom = []
+        if self.env.context.get('type') == 'mr':
+            dom += [('province_id.code', '!=', 'H')]
+            dom += [('supplier', '=', False)]
+            dom += [('type', '=', 'internal')]
+        return dom
+
+    def _domain_partner1_id(self):
+        """
+        Returns a domain of the assets valuated by appraiser.
+            [('id', 'in', [ids])]
+        """
+        dom = []
+        if self.env.context.get('type') == 'mr':
+            dom += [('province_id.code', '!=', 'H')]
+            dom += [('supplier', '=', False)]
+            dom += [('type', '=', 'internal')]
+        return dom
+
     def _default_current_labor_coste(self):
         """
         Calculate the current cost of labor for maintenance provided.
         :return:
         """
+        if self.env.context.get('type') == 'mr':
+            return False
         labor = self.env['mc.labor'].search([], limit=1, order='date desc')
         if len(labor) == 0:
             raise ValidationError(_('Define the cost of labor.'))
@@ -42,19 +68,21 @@ class McMaintenance(models.Model):
         :return:
         """
         self.coste_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids])
-        self.coste_cuc += self.labor_days * self.labor_hours * self.labor_id.coste_cuc
+        if self.labor_id:
+            self.coste_cuc += self.labor_days * self.labor_hours * self.labor_id.coste_cuc
         self.coste_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids])
-        self.coste_cup += self.labor_days * self.labor_hours * self.labor_id.coste_cup
+        if self.labor_id:
+            self.coste_cup += self.labor_days * self.labor_hours * self.labor_id.coste_cup
         self.mt = self.coste_cuc + self.coste_cup
 
     @api.constrains('datetime_start', 'datetime_stop', 'mt')
     def _check_data(self):
-        if len(self.line_ids) == 0:
-            raise ValidationError(_('Missing maintenance detail.'))
+        """
+        It is checked that the start date / time is less than the final date.
+        :return:
+        """
         if fields.Datetime.from_string(self.datetime_start) >= fields.Datetime.from_string(self.datetime_stop):
-            raise ValidationError(_('Contract start date must be less than contract end date.'))
-        if self.mt == 0:
-            raise ValidationError(_('You cannot save maintenance with cost 0.'))
+            raise ValidationError(_('The start date / time must be less than the final date.'))
 
     code = fields.Char(string='Code',
                        required=True,
@@ -68,8 +96,13 @@ class McMaintenance(models.Model):
                                      required=True)
     datetime_stop = fields.Datetime(string="",
                                     required=True)
+    user_id = fields.Many2one('res.users',
+                              string='Created by',
+                              readonly=True,
+                              default=lambda self: self.env.user.id)
     partner_id = fields.Many2one('mc.partner',
-                                 ondelete='restrict')
+                                 ondelete='restrict',
+                                 domain=lambda self: self._domain_partner_id())
     contract_id = fields.Many2one('mc.contract',
                                   string='Contract',
                                   ondelete='restrict',
@@ -78,21 +111,35 @@ class McMaintenance(models.Model):
     province_id = fields.Many2one(string='Province',
                                   related='partner_id.province_id',
                                   readonly=True)
-    entity_id = fields.Many2one('mc.partner',
-                                string='Entidad',
-                                domain="[('supplier', '=', False), "
-                                       "('type', '=', 'internal')]",
-                                ondelete='restrict')
-    supplier = fields.Boolean(string='Is a Vendor',
-                              default=lambda self: self.env.context.get('supplier') or False)
-    type = fields.Selection([('internal', 'Internal'),
-                             ('external', 'External')],
+    partner1_id = fields.Many2one('mc.partner',
+                                  ondelete='restrict',
+                                  domain=lambda self: self._domain_partner1_id())
+    contract1_id = fields.Many2one('mc.contract',
+                                   string='Contract',
+                                   ondelete='restrict',
+                                   domain="[('partner_id', '=', partner1_id), "
+                                          "('state', '=', 'finalized')]")
+    province1_id = fields.Many2one(string='Province',
+                                   related='partner1_id.province_id',
+                                   readonly=True)
+    type = fields.Selection([('imp', 'Internal Maintenance Provided'),
+                             ('emp', 'External Maintenance Provided'),
+                             ('mr', 'External Maintenance Received')],
                             string='Type',
                             default=lambda self: self.env.context.get('type') or False)
     observation = fields.Text('Observation',
                               required=True)
     invoice = fields.Binary(string='Invoice')
     invoice_filename = fields.Char('Invoice')
+    work_order_id = fields.Many2one('mc.work.order',
+                                    'Work Order',
+                                    ondelete='restrict')
+    labor_id = fields.Many2one('mc.labor',
+                               string="Labor",
+                               default=_default_current_labor_coste,
+                               ondelete='restrict')
+    labor_days = fields.Integer('Worked Days')
+    labor_hours = fields.Float('Hours Worked per Day')
     line_ids = fields.One2many('mc.maintenance.line', 'maintenance_id',
                                string='Lines')
     coste_cuc = fields.Float(string='CUC',
@@ -104,22 +151,6 @@ class McMaintenance(models.Model):
     mt = fields.Float(string='MT',
                       compute=_compute_coste,
                       store=True)
-    workorder_id = fields.Many2one('mc.work.order',
-                                   'Work Order',
-                                   readonly=True,
-                                   ondelete='restrict')
-    labor_id = fields.Many2one('mc.labor',
-                               string="Labor",
-                               default=_default_current_labor_coste,
-                               ondelete='restrict')
-    labor_days = fields.Integer('Worked Days',
-                              required=True)
-    labor_hours = fields.Float('Hours Worked per Day',
-                               required=True)
-    user_id = fields.Many2one('res.users',
-                              string='Created by',
-                              readonly=True,
-                              default=lambda self: self.env.user.id)
 
     _sql_constraints = [
         ('labor_days_zero', 'CHECK (labor_days > 0)', 'The labor days must be greater than 0.'),
@@ -130,19 +161,28 @@ class McMaintenance(models.Model):
     def _onchange_partner_id(self):
         self.contract_id = False
 
-    # @api.one
-    # def action_finalized(self):
-    #     """
-    #     Generate the code.
-    #     Update the budget used.
-    #     :return:
-    #     """
-    #     # Generate the code
-    #     if self.supplier:
-    #         self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')
-    #     else:
-    #         self.code = self.env['ir.sequence'].next_by_code('mc.%s.maintenance.provided.sequence' % self.type)
-    #     # Update the budget used
+    @api.onchange('partner1_id')
+    def _onchange_partner1_id(self):
+        self.contract1_id = False
+
+    @api.one
+    def action_finalized(self):
+        """
+        Generate the code.
+        Update the budget used.
+        :return:
+        """
+        # Check data
+        if len(self.line_ids) == 0:
+            raise ValidationError(_('Missing maintenance detail.'))
+        if self.mt == 0:
+            raise ValidationError(_('You cannot finalized maintenance with cost 0.'))
+        # Generate the code
+        if self.supplier:
+            self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')
+        else:
+            self.code = self.env['ir.sequence'].next_by_code('mc.%s.maintenance.provided.sequence' % self.type)
+        # Update the budget used
     #     if self.supplier:
     #         self.env['mc.budget'].add_maintenance_received(self.date, self.coste_cuc, self.coste_cup)
     #     else:

@@ -8,11 +8,11 @@
             <field name="model">mc.maintenance</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Contacts">
+                <tree string="Maintenance">
                     <field name="code"/>
                     <field name="date"/>
-                    <field name="entity_id"/>
-                    <field name="partner_id" string="Supplier"/>
+                    <field name="partner_id" string="Entity"/>
+                    <field name="partner1_id" string="Supplier"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -23,10 +23,11 @@
             <field name="model">mc.maintenance</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Contacts">
+                <tree string="Maintenance">
                     <field name="code"/>
                     <field name="date"/>
-                    <field name="entity_id"/>
+                    <field name="partner_id" string="Entity that received"/>
+                    <field name="partner1_id" string="Entity that provides"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -37,10 +38,11 @@
             <field name="model">mc.maintenance</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Contacts">
+                <tree string="Maintenance">
                     <field name="code"/>
                     <field name="date"/>
                     <field name="partner_id" string="Customer"/>
+                    <field name="partner1_id" string="Entity that provides"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -66,30 +68,22 @@
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
-                                   required="1" options='{"no_open": True, "no_create": True}'/>
-                            <hr colspan="4"/>
-                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
-                                   domain="[('supplier', '=', True)]" string="Supplier" required="1"
-                                   options='{"no_open": True, "no_create": True}'/>
-                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"
-                                   required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="partner_id" string="Entity" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}'/>
                             <field name="province_id" colspan="2"/>
+                            <hr colspan="4"/>
+                            <field name="partner1_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', True)]" string="Supplier" required="1" options='{"no_open": True, "no_create": True}'/>
+                            <field name="province1_id" colspan="2"/>
+                            <field name="contract1_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="invoice" filename="invoice_filename" colspan="4" required="1" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                         </group>
-                        <group string="Labor" col="4">
-                                <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                                <field name="labor_hours" widget='float_time' colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                                <field name="labor_id" invisible="1"/>
-                        </group>
                         <notebook colspan="4">
                             <page string="Equipment">
                                 <field name="line_ids" nolabel="1" attrs="{'readonly': [('state','=', 'finalized')]}">
                                     <tree editable="bottom">
-                                        <field name="equipment_id"/>
+                                        <field name="equipment_id" options='{"no_open": True, "no_create": True}'/>
                                         <field name="qty"/>
                                         <field name="maintenance_id" invisible="1"/>
                                     </tree>
@@ -126,9 +120,7 @@
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
-                                   required="1" options='{"no_open": True, "no_create": True}'/>
-                            <hr colspan="4"/>
+<!--                            <field name="entity_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/> <hr colspan="4"/>-->
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                         </group>
@@ -142,7 +134,7 @@
                                 <field name="line_ids" nolabel="1"
                                        attrs="{'readonly': [('state','=', 'finalized')]}">
                                     <tree editable="bottom">
-                                        <field name="equipment_id"/>
+                                        <field name="equipment_id" options='{"no_open": True, "no_create": True}'/>
                                         <field name="qty"/>
                                         <field name="maintenance_id" invisible="1"/>
                                     </tree>
@@ -179,17 +171,17 @@
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"
-                                   domain="[('supplier', '=', False), ('type', '=', 'external')]" string="Customer"
-                                   required="1" options='{"no_open": True, "no_create": True}'/>
-                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"
-                                   required="1" options='{"no_open": True, "no_create": True}'/>
-                            <field name="province_id" colspan="2"/>
+<!--                            <field name="partner_id" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"-->
+<!--                                   domain="[('supplier', '=', False), ('type', '=', 'external')]" string="Customer"-->
+<!--                                   required="1" options='{"no_open": True, "no_create": True}'/>-->
+<!--                            <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"-->
+<!--                                   required="1" options='{"no_open": True, "no_create": True}'/>-->
+<!--                            <field name="province_id" colspan="2"/>-->
                             <hr colspan="4"/>
                             <separator colspan="2"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="invoice" filename="invoice_filename" required="1" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
-                            <field name="workorder_id" colspan="4"/>
+                            <field name="work_order_id" colspan="4"/>
                         </group>
                         <group string="Labor" col="4">
                                 <field name="labor_days" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
@@ -225,7 +217,8 @@
                 <search>
                     <field name="code"/>
                     <field name="date"/>
-                    <field name="partner_id"/>
+                    <field name="partner_id" string="Entity"/>
+                    <field name="partner1_id" string="Supplier"/>
                     <separator/>
                     <group expand="0" string="Group By">
                         <filter string="State" name='state' domain="[]" context="{'group_by':'partner_id'}"/>
@@ -234,14 +227,33 @@
             </field>
         </record>
 
-        <record id="view_mc_maintenance_provided_search" model="ir.ui.view">
-            <field name="name">mc.maintenance.provided.search</field>
+        <record id="view_mc_internal_maintenance_provided_search" model="ir.ui.view">
+            <field name="name">mc.internal.maintenance.provided.search</field>
             <field name="model">mc.maintenance</field>
             <field name="arch" type="xml">
                 <search>
                     <field name="code"/>
                     <field name="date"/>
-                    <field name="partner_id"/>
+                    <field name="partner_id" string="Entity that receives"/>
+                    <field name="partner1_id" string="Entity that provides"/>
+                    <field name="state"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="State" name='state' domain="[]" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_mc_external_maintenance_provided_search" model="ir.ui.view">
+            <field name="name">mc.external.maintenance.provided.search</field>
+            <field name="model">mc.maintenance</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="partner_id" string="Customer"/>
+                    <field name="partner1_id" string="Entity that provides"/>
                     <field name="state"/>
                     <separator/>
                     <group expand="0" string="Group By">
@@ -257,8 +269,8 @@
             <field name="res_model">mc.maintenance</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('supplier', '=', True)]</field>
-            <field name="context">{'supplier' : True}</field>
+            <field name="domain">[('type', '=', 'mr')]</field>
+            <field name="context">{'type': 'mr'}</field>
             <field name="search_view_id" ref="view_mc_maintenance_received_search"/>
             <field name="filter" eval="True"/>
         </record>
@@ -285,9 +297,9 @@
             <field name="res_model">mc.maintenance</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('supplier', '=', False), ('type', '=', 'internal')]</field>
-            <field name="context">{'supplier' : False, 'type': 'internal'}</field>
-            <field name="search_view_id" ref="view_mc_maintenance_provided_search"/>
+            <field name="domain">[('type', '=', 'imp')]</field>
+            <field name="context">{'type': 'imp'}</field>
+            <field name="search_view_id" ref="view_mc_internal_maintenance_provided_search"/>
             <field name="filter" eval="True"/>
         </record>
 
@@ -312,9 +324,9 @@
             <field name="res_model">mc.maintenance</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('supplier', '=', False), ('type', '=', 'external')]</field>
-            <field name="context">{'supplier' : False, 'type': 'external'}</field>
-            <field name="search_view_id" ref="view_mc_maintenance_provided_search"/>
+            <field name="domain">[('type', '=', 'emp')]</field>
+            <field name="context">{'type': 'emp'}</field>
+            <field name="search_view_id" ref="view_mc_external_maintenance_provided_search"/>
             <field name="filter" eval="True"/>
         </record>
 

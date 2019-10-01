@@ -33,16 +33,9 @@ class McProvince(models.Model):
     _description = 'Province'
     _name = "mc.province"
 
+    code = fields.Char(size=2)
     name = fields.Char(string='Name',
                        required=True)
-
-    # @api.multi
-    # def unlink(self):
-    #     try:
-    #         s = super(McProvince, self).unlink()
-    #     except Exception as e:
-    #         pass
-    #     return s
 
 
 class UM(models.Model):
