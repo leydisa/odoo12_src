@@ -11,7 +11,10 @@
                 <tree string="Contacts">
                     <field name="code"/>
                     <field name="date"/>
+                    <field name="user_id"/>
                     <field name="partner_id"/>
+                    <field name="maintenance_id"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -65,7 +68,8 @@
                     <field name="partner_id"/>
                     <separator/>
                     <group expand="0" string="Group By">
-                        <filter string="State" name="state" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Customer" name="state" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="State" name="state" domain="[]" context="{'group_by':'state'}"/>
                     </group>
                 </search>
             </field>
