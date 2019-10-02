@@ -49,7 +49,7 @@
                                     <field name="email" colspan="2" widget="email"/>
                                 </group>
                             </page>
-                            <page string="Budget" attrs="{'invisible': [('supplier','=', True)]}">
+                            <page string="Budget" attrs="{'invisible': ['|', ('supplier','=', True), ('type','=', 'external')]}">
                                 <group>
                                     <field name="budget_to_received_ids">
                                         <tree editable="bottom">

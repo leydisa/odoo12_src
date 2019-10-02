@@ -6,6 +6,9 @@ access_doc_state_user,doc.state,model_doc_state,group_mc_user,1,1,1,1
 access_mc_province_admin,mc.province,model_mc_province,group_mc_adm,1,1,1,1
 access_mc_province_user,mc.province,model_mc_province,group_mc_user,1,1,1,1
 ,,,,,
+access_um_admin,um,model_um,group_mc_adm,1,1,1,1
+access_um_user,um,model_um,group_mc_user,1,1,1,1
+,,,,,
 access_mc_labor_admin,mc.labor,model_mc_labor,group_mc_adm,1,1,1,1
 access_mc_labor_user,mc.labor,model_mc_labor,group_mc_user,1,1,1,1
 ,,,,,

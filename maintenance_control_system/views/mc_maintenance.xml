@@ -68,10 +68,10 @@
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="partner_id" string="Entity" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'type': 'mr', 'date': date}"/>
+                            <field name="partner_id" string="Entity" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'m_type': 'mr', 'date': date}"/>
                             <field name="province_id" colspan="2"/>
                             <hr colspan="4"/>
-                            <field name="partner1_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', True)]" string="Supplier" required="1" options='{"no_open": True, "no_create": True}' context="{'type': 'mr1', 'date': date}"/>
+                            <field name="partner1_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', True)]" string="Supplier" required="1" options='{"no_open": True, "no_create": True}' context="{'m_type': 'mr1', 'date': date}"/>
                             <field name="province1_id" colspan="2"/>
                             <field name="contract1_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
                             <separator colspan="2"/>
@@ -120,10 +120,10 @@
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="partner_id" string="Entity that received" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'type': 'imp', 'date': date}"/>
+                            <field name="partner_id" string="Entity that received" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'m_type': 'imp', 'date': date}"/>
                             <field name="province_id" colspan="2"/>
                             <hr colspan="4"/>
-                            <field name="partner1_id" string="Entity that provides" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'type': 'imp1', 'date': date}"/>
+                            <field name="partner1_id" string="Entity that provides" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'m_type': 'imp1', 'date': date}"/>
                             <field name="province_id" colspan="2"/>
                             <hr colspan="4"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
@@ -175,12 +175,12 @@
                                    attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
-                            <field name="partner_id" string="Customer" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" domain="[('supplier', '=', True)]" required="1" options='{"no_open": True, "no_create": True}' context="{'type': 'emp', 'date': date}"/>
+                            <field name="partner_id" string="Customer" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}' context="{'m_type': 'emp', 'date': date}"/>
                             <field name="province_id" colspan="2"/>
                             <field name="contract_id" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}'/>
                             <separator colspan="2"/>
                             <hr colspan="4"/>
-                            <field name="partner1_id" string="Entity that provides" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'type': 'emp1', 'date': date}"/>
+                            <field name="partner1_id" string="Entity that provides" required="1" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" options='{"no_open": True, "no_create": True}' context="{'m_type': 'emp1', 'date': date}"/>
                             <field name="province_id" colspan="2"/>
                             <hr colspan="4"/>
                             <field name="observation" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>

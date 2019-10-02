@@ -44,9 +44,11 @@ class McWorkOrder(models.Model):
                        required=True,
                        index=True,
                        default=_get_default_date)
-    file = fields.Binary(string='Document')
-    filename = fields.Char('File Name')
-    line_ids = fields.One2many('mc.work.order.line', 'workorder_id',
+    file = fields.Binary(string='Document',
+                         required=True)
+    filename = fields.Char('File Name',
+                           required=True)
+    line_ids = fields.One2many('mc.work.order.line', 'work_order_id',
                                required=True,
                                string='Lines')
     partner_id = fields.Many2one('mc.partner',
@@ -57,9 +59,9 @@ class McWorkOrder(models.Model):
     maintenance_id = fields.Many2one('mc.maintenance',
                                      string='Maintenance',
                                      required=True,
-                                     domain="[('supplier', '=', False), "
-                                            "('type', '=', 'external'), "
-                                            "('workorder_id', '=', False)]")
+                                     domain="[('type', '=', 'emp'), "
+                                            "('work_order_id', '=', False),"
+                                            "('state', '=', 'finalized')]")
     user_id = fields.Many2one('res.users',
                               string='Created by',
                               readonly=True,
@@ -74,10 +76,10 @@ class McWorkOrder(models.Model):
         """
         # Assign the work order to maintenance.
         maintenance = self.env['mc.maintenance'].browse(self.maintenance_id.id)
-        if maintenance.workorder_id:
+        if maintenance.work_order_id:
             raise ValidationError(_('The maintenance already has an assigned work order.'))
         else:
-            maintenance.write({'workorder_id': self.id})
+            maintenance.write({'work_order_id': self.id})
         # Generate the code.
         self.code = self.env['ir.sequence'].next_by_code('mc.work.order.sequence')
         return super(McWorkOrder, self).action_finalized()
@@ -99,5 +101,5 @@ class McWorkOrderLine(models.Model):
     observation = fields.Text('Observation')
     serial_no = fields.Text(string='Serial No.',
                             required=True)
-    workorder_id = fields.Many2one('mc.work.order',
-                                   ondelete='cascade')
+    work_order_id = fields.Many2one('mc.work.order',
+                                    ondelete='cascade')

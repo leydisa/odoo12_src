@@ -45,7 +45,7 @@
                                         <field name="serial_no"/>
                                         <field name="inventory_no"/>
                                         <field name="observation"/>
-                                        <field name="workorder_id" invisible="1"/>
+                                        <field name="work_order_id" invisible="1"/>
                                     </tree>
                                 </field>
                             </page>

@@ -60,7 +60,6 @@ class McMaintenance(models.Model):
             raise ValidationError(_('The start date / time must be less than the final date.'))
 
     code = fields.Char(string='Code',
-                       required=True,
                        readonly=True,
                        default=_('New'))
     date = fields.Date(string='Creation Date',
@@ -106,6 +105,7 @@ class McMaintenance(models.Model):
     invoice_filename = fields.Char('Invoice')
     work_order_id = fields.Many2one('mc.work.order',
                                     'Work Order',
+                                    readonly=True,
                                     ondelete='restrict')
     labor_id = fields.Many2one('mc.labor',
                                string="Labor",
@@ -151,16 +151,18 @@ class McMaintenance(models.Model):
         if self.mt == 0:
             raise ValidationError(_('You cannot finalized maintenance with cost 0.'))
         # Generate the code
-        if self.supplier:
+        if self.type == 'mr':
             self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')
+        elif self.type == 'imp':
+            self.code = self.env['ir.sequence'].next_by_code('mc.internal.maintenance.provided.sequence')
         else:
-            self.code = self.env['ir.sequence'].next_by_code('mc.%s.maintenance.provided.sequence' % self.type)
+            self.code = self.env['ir.sequence'].next_by_code('mc.external.maintenance.provided.sequence')
         # Update the budget used
     #     if self.supplier:
     #         self.env['mc.budget'].add_maintenance_received(self.date, self.coste_cuc, self.coste_cup)
     #     else:
     #         self.env['mc.budget'].add_maintenance_provided(self.date, self.coste_cuc, self.coste_cup)
-    #     return super(McMaintenance, self).action_finalized()
+        return super(McMaintenance, self).action_finalized()
 
 
 class McMaintenanceLine(models.Model):
@@ -175,7 +177,8 @@ class McMaintenanceLine(models.Model):
     equipment_id = fields.Many2one('mc.equipment',
                                    required=True,
                                    ondelete='restrict')
-    qty = fields.Integer(string='Quantity')
+    qty = fields.Integer(string='Quantity',
+                         required=True)
     coste_cuc = fields.Float(string='CUC)',
                              related='equipment_id.coste_cuc',
                              readonly=True)
