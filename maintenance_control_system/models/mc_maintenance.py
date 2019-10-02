@@ -22,31 +22,6 @@ class McMaintenance(models.Model):
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
 
-    @api.model
-    def _domain_partner_id(self):
-        """
-        Returns a domain of the assets valuated by appraiser.
-            [('id', 'in', [ids])]
-        """
-        dom = []
-        if self.env.context.get('type') == 'mr':
-            dom += [('province_id.code', '!=', 'H')]
-            dom += [('supplier', '=', False)]
-            dom += [('type', '=', 'internal')]
-        return dom
-
-    def _domain_partner1_id(self):
-        """
-        Returns a domain of the assets valuated by appraiser.
-            [('id', 'in', [ids])]
-        """
-        dom = []
-        if self.env.context.get('type') == 'mr':
-            dom += [('province_id.code', '!=', 'H')]
-            dom += [('supplier', '=', False)]
-            dom += [('type', '=', 'internal')]
-        return dom
-
     def _default_current_labor_coste(self):
         """
         Calculate the current cost of labor for maintenance provided.
@@ -101,8 +76,7 @@ class McMaintenance(models.Model):
                               readonly=True,
                               default=lambda self: self.env.user.id)
     partner_id = fields.Many2one('mc.partner',
-                                 ondelete='restrict',
-                                 domain=lambda self: self._domain_partner_id())
+                                 ondelete='restrict')
     contract_id = fields.Many2one('mc.contract',
                                   string='Contract',
                                   ondelete='restrict',
@@ -112,8 +86,7 @@ class McMaintenance(models.Model):
                                   related='partner_id.province_id',
                                   readonly=True)
     partner1_id = fields.Many2one('mc.partner',
-                                  ondelete='restrict',
-                                  domain=lambda self: self._domain_partner1_id())
+                                  ondelete='restrict')
     contract1_id = fields.Many2one('mc.contract',
                                    string='Contract',
                                    ondelete='restrict',

@@ -79,6 +79,41 @@ class McPartner(models.Model):
             vals['code'] = self.env['ir.sequence'].next_by_code(sequence)
         return super(McPartner, self).create(vals)
 
+    @api.model
+    def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
+        args = args or []
+        date = self._context.get('date', False)
+        if 'type' in self._context and not date:
+            args = [('id', '=', 0)]
+        type = self._context.get('type', False)
+        year = fields.Datetime.from_string(date).year
+        if type == 'mr' and date:
+            ids = self.env['mc.budget.to.received'].search([('year', '=', year)]).mapped('entity_id').ids
+            args += [('supplier', '=', False)]
+            args += [('type', '=', 'internal')]
+            args += [('id', 'in', ids)]
+        elif type == 'mr1':
+            args += [('supplier', '=', True)]
+        elif type == 'imp':
+            ids = self.env['mc.budget.to.received'].search([('year', '=', year)]).mapped('entity_id').ids
+            args += [('supplier', '=', False)]
+            args += [('type', '=', 'internal')]
+            args += [('id', 'in', ids)]
+        elif type == 'imp1':
+            ids = self.env['mc.budget.to.provided'].search([('year', '=', year)]).mapped('entity_id').ids
+            args += [('supplier', '=', False)]
+            args += [('type', '=', 'internal')]
+            args += [('id', 'in', ids)]
+        elif type == 'emp':
+            args += [('supplier', '=', False)]
+            args += [('type', '=', 'external')]
+        elif type == 'emp1':
+            ids = self.env['mc.budget.to.provided'].search([('year', '=', year)]).mapped('entity_id').ids
+            args += [('supplier', '=', False)]
+            args += [('type', '=', 'internal')]
+            args += [('id', 'in', ids)]
+        return super(McPartner, self)._name_search(name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
+
 
 class McBudgetToReceived(models.Model):
     """
