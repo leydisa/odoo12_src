@@ -3,54 +3,154 @@
     <data>
 
         <template id="rp_maintenance">
-            <t t-call="web.internal_layout">
+            <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="o">
-                    <div class="page">
+                    <t t-call="web.external_layout">
+                        <div class="page">
 
-                        <div class="row" >
-                            <div class="col-xs-12">
-                                <h2>Maintenance Received</h2>
+                            <div class="row" t-if="o.type == 'mr'">
+                                <div class="col-xs-12">
+                                    <h2>Maintenance Received</h2>
+                                </div>
+                            </div>
+
+                            <div class="row" t-if="o.type == 'imp'">
+                                <div class="col-xs-12">
+                                    <h2>Internal Maintenance Provided</h2>
+                                </div>
+                            </div>
+
+                            <div class="row" t-if="o.type == 'emp'">
+                                <div class="col-xs-12">
+                                    <h2>External Maintenance Provided</h2>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <strong>Code:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.code"/>
+                                </div>
+                                <div class="col-xs-2">
+                                    <strong>Date:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.date"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5"/>
+                                <div class="col-xs-2">
+                                    <strong>Created by:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.user_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <strong>Datetime Start:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.datetime_start"/>
+                                </div>
+                                <div class="col-xs-2">
+                                    <strong>Datetime Stop:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.datetime_stop"/>
+                                </div>
+                            </div>
+                            <hr/>
+                             <div class="row">
+                                <div class="col-xs-2">
+                                    <strong t-if="o.type in ('mr', 'imp')">Entity:</strong>
+                                    <strong t-if="o.type == 'emp'">Customer:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.partner_id.name"/>
+                                </div>
+                                <div class="col-xs-2">
+                                    <strong>Province:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.province_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2" t-if="o.contract_id">
+                                    <strong>Contract:</strong>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span t-esc="o.contract_id.code"/>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <strong t-if="o.type == 'mr'">Proveedor:</strong>
+                                    <strong t-if="o.type in ('imp', 'emp')">Entity:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.partner1_id.name"/>
+                                </div>
+                                <div class="col-xs-2">
+                                    <strong>Province:</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <span t-esc="o.province1_id.name"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-2" t-if="o.contract1_id">
+                                    <strong>Contract:</strong>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span t-esc="o.contract1_id.code"/>
+                                </div>
+                            </div>
+                            <hr/>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <strong>Observation:</strong>
+                                </div>
+                                <div class="col-xs-8">
+                                    <span t-esc="o.observation"/>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <table class="table table-condensed"
+                                           style="border-bottom: 0px solid white !important;">
+                                        <thead>
+                                            <tr>
+                                                <th>Equipment</th>
+                                                <th>Qty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr t-foreach="o.line_ids" t-as="l">
+                                                <td>
+                                                    <span t-field="l.equipment_id.name"/>
+                                                </td>
+                                                <td>
+                                                    <t>
+                                                        <span t-field="l.qty"/>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                    </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-
-                         <br/>
-                        <br/>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <table class="table table-condensed" style="border-bottom: 0px solid white !important;">
-                                    <thead>
-                                        <tr>
-                                            <th>Equipment</th>
-                                            <th>Local</th>
-                                            <th>Serial Number</th>
-                                            <th>Inventory Number</th>
-                                            <th>Observation</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr t-foreach="o.line_ids" t-as="l">
-                                            <td>
-<!--                                                <span t-field="l.equipment_id.name"/>-->
-                                            </td>
-                                            <td>
-<!--                                                <t><span t-field="l.local"/></t>-->
-                                            </td>
-                                            <td>
-<!--                                                <t><span t-field="l.inventory_no"/></t>-->
-                                            </td>
-                                            <td>
-<!--                                                <t><span t-field="l.serial_no"/></t>-->
-                                            </td>
-                                            <td>
-<!--                                                <t><span t-field="l.observation"/></t>-->
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
+                    </t>
                 </t>
             </t>
         </template>

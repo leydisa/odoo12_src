@@ -58,6 +58,8 @@
                                             <field name="budget_cup"/>
                                             <field name="used_cuc"/>
                                             <field name="used_cup"/>
+                                            <field name="percent_cuc" widget="percentpie" nolabel="1"/>
+                                            <field name="percent_cup" widget="percentpie" nolabel="1"/>
                                             <field name="entity_id" invisible="1"/>
                                         </tree>
                                     </field>
@@ -68,6 +70,8 @@
                                             <field name="budget_cup"/>
                                             <field name="used_cuc"/>
                                             <field name="used_cup"/>
+                                            <field name="percent_cuc" widget="percentpie" nolabel="1"/>
+                                            <field name="percent_cup" widget="percentpie" nolabel="1"/>
                                             <field name="entity_id" invisible="1"/>
                                         </tree>
                                     </field>

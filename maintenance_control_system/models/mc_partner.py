@@ -91,12 +91,15 @@ class McPartner(models.Model):
             args += [('type', '=', 'internal')]
             args += [('id', 'in', ids)]
         elif m_type == 'mr1':
-            args += [('supplier', '=', True)]
+            dom = [('supplier', '=', True), ('date', '<=', date), '|', ('expiration_date', '>=', date),
+                    ('expiration_date', '=', False)]
+            ids = self.env['mc.contract'].search(dom).mapped('partner_id').ids
+            args += [('id', 'in', ids)]
         elif m_type == 'imp':
             ids = self.env['mc.budget.to.received'].search([('year', '=', year)]).mapped('entity_id').ids
             args += [('supplier', '=', False)]
             args += [('type', '=', 'internal')]
-            args += [('id', 'in', ids)]
+            args += [('id', 'not in', ids)]
         elif m_type == 'imp1':
             ids = self.env['mc.budget.to.provided'].search([('year', '=', year)]).mapped('entity_id').ids
             args += [('supplier', '=', False)]
@@ -109,7 +112,7 @@ class McPartner(models.Model):
             ids = self.env['mc.budget.to.provided'].search([('year', '=', year)]).mapped('entity_id').ids
             args += [('supplier', '=', False)]
             args += [('type', '=', 'internal')]
-            args += [('id', 'in', ids)]
+            args += [('id', 'not in', ids)]
         return super(McPartner, self)._name_search(name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
 
 
@@ -120,43 +123,23 @@ class McBudgetToReceived(models.Model):
     _description = 'Annual Budget'
     _name = "mc.budget.to.received"
 
-    # def add_maintenance_provided(self, date, cuc, cup):
-    #     """
-    #
-    #     :param cuc:
-    #     :param cup:
-    #     :return:
-    #     """
-    #     year = fields.Datetime.from_string(date).year
-    #     budget = self.search([('year', '=', year)], limit=1)
-    #     if len(budget) == 0:
-    #         raise ValidationError(_('Define the budget for the current year.'))
-    #     else:
-    #         budget.write({'used_provided_cuc': budget.used_provided_cuc + cuc,
-    #                       'percent_provided_cuc': ((budget.used_provided_cuc + cuc) * 100)
-    #                                               / budget.budget_provided_cuc,
-    #                       'used_provided_cup': budget.used_provided_cup + cup,
-    #                       'percent_provided_cup': ((budget.used_provided_cup + cup) * 100)
-    #                                               / budget.budget_provided_cup})
+    @api.depends('budget_cuc', 'used_cuc')
+    @api.multi
+    def _compute_percent_cuc(self):
+        """
+        Compute percent cuc
+        :return:
+        """
+        self.percent_cuc = self.used_cuc * 100 / self.budget_cuc
 
-    # def add_maintenance_received(self, date, cuc, cup):
-    #     """
-    #
-    #     :param cuc:
-    #     :param cup:
-    #     :return:
-    #     """
-    #     year = fields.Datetime.from_string(date).year
-    #     budget = self.search([('year', '=', year)], limit=1)
-    #     if len(budget) == 0:
-    #         raise ValidationError(_('Define the budget for the current year.'))
-    #     else:
-    #         budget.write({'used_received_cuc': budget.used_received_cuc + cuc,
-    #                       'percent_received_cuc': ((budget.used_received_cuc + cuc) * 100)
-    #                                               / budget.budget_received_cuc,
-    #                       'used_received_cup': budget.used_received_cup + cup,
-    #                       'percent_received_cup': ((budget.used_received_cup + cup) * 100)
-    #                                               / budget.budget_received_cup})
+    @api.depends('budget_cup', 'used_cup')
+    @api.multi
+    def _compute_percent_cup(self):
+        """
+        Compute percent cup
+        :return:
+        """
+        self.percent_cup = self.used_cup * 100 / self.budget_cup
 
     def _get_default_year(self):
         """
@@ -171,18 +154,22 @@ class McBudgetToReceived(models.Model):
     entity_id = fields.Many2one('mc.partner',
                                 required=True,
                                 ondelete='cascade')
-    budget_cuc = fields.Float("CUC",
+    budget_cuc = fields.Float("Budget (CUC)",
                               required=True)
-    budget_cup = fields.Float("CUP",
+    budget_cup = fields.Float("Budget (CUP)",
                               required=True)
-    used_cuc = fields.Float("CUC",
+    used_cuc = fields.Float("Used (CUC)",
                             readonly=True)
-    used_cup = fields.Float("CUP",
+    used_cup = fields.Float("Used (CUP)",
                             readonly=True)
     percent_cuc = fields.Float("CUC",
-                               readonly=True)
+                               compute="_compute_percent_cuc",
+                               readonly=True,
+                               store=False)
     percent_cup = fields.Float("CUP",
-                               readonly=True)
+                               compute="_compute_percent_cup",
+                               readonly=True,
+                               store=False)
 
     _sql_constraints = [
         ('budget_zero', 'CHECK (budget_cuc > 0 and budget_cup > 0)', 'The budget must be greater than 0.'),

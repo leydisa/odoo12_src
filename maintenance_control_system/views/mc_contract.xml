@@ -11,9 +11,10 @@
                 <tree string="Contacts">
                     <field name="code"/>
                     <field name="date"/>
-                    <field name="expiration_date"/>
-                    <field name="description"/>
                     <field name="partner_id" string="Customer"/>
+                    <field name="expiration_date"/>
+                    <field name="user_id"/>
+                    <field name="description"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -27,9 +28,10 @@
                 <tree string="Contacts">
                     <field name="code"/>
                     <field name="date"/>
-                    <field name="expiration_date"/>
-                    <field name="description"/>
                     <field name="partner_id" string="Supplier"/>
+                    <field name="expiration_date"/>
+                    <field name="user_id"/>
+                    <field name="description"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -47,15 +49,16 @@
                     <sheet>
                         <group col="6">
                             <field name="code" colspan="2"/>
-                            <field name="date" colspan="4"/>
+                            <field name="date" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <separator colspan="2"/>
-                            <field name="expiration_date" colspan="4"/>
+                            <field name="expiration_date" colspan="4" attrs="{'readonly': [('state','=', 'finalized'), ('expiration_date_editable', '=', False)]}"/>
                             <separator colspan="2"/>
                             <field name="user_id" colspan="4"/>
-                            <field name="partner_id" colspan="6" string="Customer" domain="[('supplier', '=', False), ('type', '=', 'external')]" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="description" colspan="6"/>
-                            <field name="file" filename="filename" colspan="6"/>
+                            <field name="partner_id" colspan="6" string="Customer" domain="[('supplier', '=', False), ('type', '=', 'external')]" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state','=', 'finalized')]}" />
+                            <field name="description" colspan="6" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="file" filename="filename" colspan="6" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="supplier" invisible="1"/>
+                            <field name="expiration_date_editable" invisible="1"/>
                         </group>
                     </sheet>
                 </form>
@@ -74,14 +77,14 @@
                     <sheet>
                         <group col="6">
                             <field name="code" colspan="2"/>
-                            <field name="date" colspan="4"/>
+                            <field name="date" colspan="4" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <separator colspan="2"/>
-                            <field name="expiration_date" colspan="4"/>
+                            <field name="expiration_date" colspan="4" attrs="{'readonly': [('state','=', 'finalized'), ('expiration_date', '!=', False)]}"/>
                             <separator colspan="2"/>
                             <field name="user_id" colspan="4"/>
-                            <field name="partner_id" colspan="6" string="Supplier" domain="[('supplier', '=', True)]" options="{'no_create': True, 'no_open': True}"/>
-                            <field name="description" colspan="6"/>
-                            <field name="file" filename="filename" colspan="6"/>
+                            <field name="partner_id" colspan="6" string="Supplier" domain="[('supplier', '=', True)]" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="description" colspan="6" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="file" filename="filename" colspan="6" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                         </group>
                     </sheet>
                 </form>

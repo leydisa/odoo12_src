@@ -22,6 +22,20 @@ class McMaintenance(models.Model):
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
 
+    def _get_default_partner1(self):
+        """
+        :return: to the date of the day
+        """
+        if self.env.context.get('type') in ('imp', 'emp'):
+            year = fields.Date.from_string(fields.Date.today()).year
+            ids = self.env['mc.budget.to.provided'].search([('year', '=', year)]).mapped('entity_id').ids
+            dom = [('supplier', '=', False)]
+            dom += [('type', '=', 'internal')]
+            dom += [('id', 'in', ids)]
+            partner_ids = self.env['mc.partner'].search(dom)
+            if len(partner_ids) == 1:
+                return partner_ids[0]
+
     def _default_current_labor_coste(self):
         """
         Calculate the current cost of labor for maintenance provided.
@@ -80,12 +94,16 @@ class McMaintenance(models.Model):
                                   string='Contract',
                                   ondelete='restrict',
                                   domain="[('partner_id', '=', partner_id), "
-                                         "('state', '=', 'finalized')]")
+                                         "('state', '=', 'finalized'),"
+                                         "('date', '<=', date),"
+                                         "'|', ('expiration_date', '>=', date),"
+                                         "('expiration_date', '=', False)]")
     province_id = fields.Many2one(string='Province',
                                   related='partner_id.province_id',
                                   readonly=True)
     partner1_id = fields.Many2one('mc.partner',
-                                  ondelete='restrict')
+                                  ondelete='restrict',
+                                  default=_get_default_partner1)
     contract1_id = fields.Many2one('mc.contract',
                                    string='Contract',
                                    ondelete='restrict',
@@ -141,6 +159,7 @@ class McMaintenance(models.Model):
     @api.one
     def action_finalized(self):
         """
+        Check data.
         Generate the code.
         Update the budget used.
         :return:
@@ -158,10 +177,16 @@ class McMaintenance(models.Model):
         else:
             self.code = self.env['ir.sequence'].next_by_code('mc.external.maintenance.provided.sequence')
         # Update the budget used
-    #     if self.supplier:
-    #         self.env['mc.budget'].add_maintenance_received(self.date, self.coste_cuc, self.coste_cup)
-    #     else:
-    #         self.env['mc.budget'].add_maintenance_provided(self.date, self.coste_cuc, self.coste_cup)
+        year = fields.Datetime.from_string(self.date).year
+        if self.type == 'mr':
+            model = 'mc.budget.to.received'
+            entity_id = self.partner_id.id
+        else:
+            model = 'mc.budget.to.provided'
+            entity_id = self.partner_id1.id
+        budget = self.env[model].search([('year', '=', year), ('entity_id', '=', entity_id)], limit=1)
+        budget.used_cuc = self.coste_cuc
+        budget.used_cup = self.coste_cup
         return super(McMaintenance, self).action_finalized()
 
 

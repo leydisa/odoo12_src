@@ -32,6 +32,7 @@ class McContract(models.Model):
     description = fields.Text('Description',
                               required=True)
     expiration_date = fields.Date(string='Expiration Date')
+    expiration_date_editable = fields.Boolean(default=True)
     file = fields.Binary(string="Document",
                          required=True)
     filename = fields.Char('File Name',
@@ -45,6 +46,17 @@ class McContract(models.Model):
                               string='Created by',
                               readonly=True,
                               default=lambda self: self.env.user.id)
+
+    @api.multi
+    def write(self, vals):
+        """
+        Edit the end date until one is set.
+        :param values:
+        :return:
+        """
+        if 'expiration_date' in vals:
+            vals['expiration_date_editable'] = False
+        return super(McContract, self).write(vals)
 
     @api.one
     def action_finalized(self):

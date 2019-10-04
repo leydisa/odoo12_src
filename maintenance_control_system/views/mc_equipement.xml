@@ -12,6 +12,8 @@
                     <field name="name"/>
                     <field name="date"/>
                     <field name="description"/>
+                    <field name="coste_cuc"/>
+                    <field name="coste_cup"/>
                 </tree>
             </field>
         </record>
@@ -57,7 +59,7 @@
                 <form string="Equipment Material Expense">
                     <sheet>
                         <group>
-                            <field name="material_id"/>
+                            <field name="material_id" options='{"no_open": True, "no_create": True}'/>
                             <field name="user_id"/>
                         </group>
                         <group>

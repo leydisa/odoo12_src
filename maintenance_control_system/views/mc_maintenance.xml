@@ -13,6 +13,9 @@
                     <field name="date"/>
                     <field name="partner_id" string="Entity"/>
                     <field name="partner1_id" string="Supplier"/>
+                    <field name="coste_cuc"/>
+                    <field name="coste_cup"/>
+                    <field name="mt"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -28,6 +31,9 @@
                     <field name="date"/>
                     <field name="partner_id" string="Entity that received"/>
                     <field name="partner1_id" string="Entity that provides"/>
+                    <field name="coste_cuc"/>
+                    <field name="coste_cup"/>
+                    <field name="mt"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -43,6 +49,9 @@
                     <field name="date"/>
                     <field name="partner_id" string="Customer"/>
                     <field name="partner1_id" string="Entity that provides"/>
+                    <field name="coste_cuc"/>
+                    <field name="coste_cup"/>
+                    <field name="mt"/>
                     <field name="state"/>
                 </tree>
             </field>
