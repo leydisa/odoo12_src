@@ -3,6 +3,7 @@
 
 
 from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
 
 
 class McContract(models.Model):
@@ -20,6 +21,16 @@ class McContract(models.Model):
         """
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
+
+    @api.constrains('date', 'expiration_date')
+    def _check_data(self):
+        """
+        It is checked that the start date / time is less than the final date.
+        :return:
+        """
+        if self.expiration_date and \
+                not (fields.Datetime.from_string(self.expiration_date) > fields.Datetime.from_string(self.date)):
+            raise ValidationError(_('The start date must be less than the expiration date.'))
 
     code = fields.Char(string='Code',
                        required=True,
@@ -67,4 +78,3 @@ class McContract(models.Model):
         sequence = 'mc.%s.contract.sequence' % ('supplier' if self.supplier else 'customer')
         self.code = self.env['ir.sequence'].next_by_code(sequence)
         return super(McContract, self).action_finalized()
-

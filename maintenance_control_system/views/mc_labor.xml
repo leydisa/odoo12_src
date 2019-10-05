@@ -12,6 +12,9 @@
                     <field name="date"/>
                     <field name="coste_cuc"/>
                     <field name="coste_cup"/>
+                    <field name="coste_cup"/>
+                    <field name="used"/>
+                    <field name="maintenance_ids" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -22,13 +25,17 @@
             <field name="arch" type="xml">
                 <form string="Material">
                     <sheet>
-                        <group col="4">
-                            <field name="date" colspan="2"/>
+                        <group col="6">
+                            <field name="date" colspan="2" attrs="{'readonly': [('used','=', True)]}"/>
                             <separator colspan="2"/>
+                            <field name="used" colspan="2"/>
                         </group>
-                        <group col="4" string="Labor cost per hour">
-                            <field name="coste_cuc" colspan="2"/>
-                            <field name="coste_cup" colspan="2"/>
+                        <group col="6" string="Labor cost per hour">
+                            <field name="coste_cuc" colspan="2" attrs="{'readonly': [('used','=', True)]}"/>
+                            <separator colspan="4"/>
+                            <field name="coste_cup" colspan="2" attrs="{'readonly': [('used','=', True)]}"/>
+                            <separator colspan="4"/>
+                            <field name="maintenance_ids" invisible="1"/>
                         </group>
                     </sheet>
                 </form>

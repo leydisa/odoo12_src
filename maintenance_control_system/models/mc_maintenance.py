@@ -108,7 +108,10 @@ class McMaintenance(models.Model):
                                    string='Contract',
                                    ondelete='restrict',
                                    domain="[('partner_id', '=', partner1_id), "
-                                          "('state', '=', 'finalized')]")
+                                          "('state', '=', 'finalized'),"
+                                          "('date', '<=', date),"
+                                          "'|', ('expiration_date', '>=', date),"
+                                          "('expiration_date', '=', False)]")
     province1_id = fields.Many2one(string='Province',
                                    related='partner1_id.province_id',
                                    readonly=True)
@@ -148,13 +151,39 @@ class McMaintenance(models.Model):
         ('labor_hours_zero', 'CHECK (labor_hours > 0)', 'The labor hours must be greater than 0.'),
     ]
 
-    @api.onchange('partner_id')
-    def _onchange_partner_id(self):
-        self.contract_id = False
+    @api.onchange('date')
+    def _onchange_date(self):
+        if not self.date:
+            self.partner_id = False
+            self.partner1_id = False
 
-    @api.onchange('partner1_id')
+    @api.onchange('partner_id', 'date')
+    def _onchange_partner_id(self):
+        """
+        If the customer or supplier has only one contract, it is shown by default.
+        :return:
+        """
+        self.contract_id = False
+        if self.partner_id and self.env.context.get('type') == 'emp':
+            dom = [('partner_id', '=', self.partner_id.id), ('date', '<=', self.date),
+                   '|', ('expiration_date', '>=', self.date), ('expiration_date', '=', False)]
+            contract_ids = self.env['mc.contract'].search(dom)
+            if len(contract_ids) == 1:
+                self.contract_id = contract_ids[0]
+
+    @api.onchange('partner1_id', 'date')
     def _onchange_partner1_id(self):
+        """
+        If the customer or supplier has only one contract, it is shown by default.
+        :return:
+        """
         self.contract1_id = False
+        if self.partner1_id and self.env.context.get('type') == 'mr':
+            dom = [('partner_id', '=', self.partner1_id.id), ('date', '<=', self.date),
+                   '|', ('expiration_date', '>=', self.date), ('expiration_date', '=', False)]
+            contract_ids = self.env['mc.contract'].search(dom)
+            if len(contract_ids) == 1:
+                self.contract1_id = contract_ids[0]
 
     @api.one
     def action_finalized(self):
@@ -183,7 +212,7 @@ class McMaintenance(models.Model):
             entity_id = self.partner_id.id
         else:
             model = 'mc.budget.to.provided'
-            entity_id = self.partner_id1.id
+            entity_id = self.partner1_id.id
         budget = self.env[model].search([('year', '=', year), ('entity_id', '=', entity_id)], limit=1)
         budget.used_cuc = self.coste_cuc
         budget.used_cup = self.coste_cup

@@ -3,7 +3,7 @@
 
 
 import datetime
-from odoo import api, fields, models, _
+from odoo import api, fields, models, tools,  _
 from odoo.exceptions import ValidationError
 
 
@@ -33,9 +33,8 @@ class McPartner(models.Model):
                        default=_('New'))
     name = fields.Char(index=True,
                        required=True)
-    image = fields.Binary("Image",
-                          attachment=True,
-                          help="This field holds the image used as avatar for this contact, limited to 1024x1024px")
+    image_medium = fields.Binary("Image",
+                          attachment=True)
     date = fields.Date(string='Creation Date',
                        required=True,
                        index=True,
@@ -72,12 +71,18 @@ class McPartner(models.Model):
         :param vals:
         :return:
         """
+        tools.image_resize_images(vals)
         if vals['supplier']:
             vals['code'] = self.env['ir.sequence'].next_by_code('mc.supplier.sequence')
         else:
             sequence = 'mc.%s.customer.sequence' % vals['type']
             vals['code'] = self.env['ir.sequence'].next_by_code(sequence)
         return super(McPartner, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        tools.image_resize_images(vals)
+        return super(McPartner, self).write(vals)
 
     @api.model
     def _name_search(self, name, args=None, operator='ilike', limit=100, name_get_uid=None):
@@ -106,13 +111,15 @@ class McPartner(models.Model):
             args += [('type', '=', 'internal')]
             args += [('id', 'in', ids)]
         elif m_type == 'emp':
-            args += [('supplier', '=', False)]
-            args += [('type', '=', 'external')]
+            dom = [('supplier', '=', False), ('date', '<=', date), '|', ('expiration_date', '>=', date),
+                   ('expiration_date', '=', False)]
+            ids = self.env['mc.contract'].search(dom).mapped('partner_id').ids
+            args += [('id', 'in', ids)]
         elif m_type == 'emp1':
             ids = self.env['mc.budget.to.provided'].search([('year', '=', year)]).mapped('entity_id').ids
             args += [('supplier', '=', False)]
             args += [('type', '=', 'internal')]
-            args += [('id', 'not in', ids)]
+            args += [('id', 'in', ids)]
         return super(McPartner, self)._name_search(name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
 
 

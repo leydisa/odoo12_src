@@ -180,8 +180,7 @@
                             <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <separator colspan="2"/>
                             <field name="user_id" colspan="2"/>
-                            <field name="datetime_start" colspan="2"
-                                   attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <field name="datetime_start" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <field name="datetime_stop" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
                             <hr colspan="4"/>
                             <field name="partner_id" string="Customer" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}" required="1" options='{"no_open": True, "no_create": True}' context="{'m_type': 'emp', 'date': date}"/>
