@@ -69,6 +69,16 @@ class McContract(models.Model):
             vals['expiration_date_editable'] = False
         return super(McContract, self).write(vals)
 
+    @api.multi
+    def unlink(self):
+        """
+        It is not possible to delete in the finalized state.
+        :return:
+        """
+        if self.state == 'finalized':
+            raise ValidationError('It is not possible to delete in the finalized state.')
+        return super(McContract, self).unlink()
+
     @api.one
     def action_finalized(self):
         """

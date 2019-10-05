@@ -67,6 +67,16 @@ class McWorkOrder(models.Model):
                               readonly=True,
                               default=lambda self: self.env.user.id)
 
+    @api.multi
+    def unlink(self):
+        """
+        It is not possible to delete in the finalized state.
+        :return:
+        """
+        if self.state == 'finalized':
+            raise ValidationError('It is not possible to delete in the finalized state.')
+        return super(McWorkOrder, self).unlink()
+
     @api.one
     def action_finalized(self):
         """

@@ -151,6 +151,16 @@ class McMaintenance(models.Model):
         ('labor_hours_zero', 'CHECK (labor_hours > 0)', 'The labor hours must be greater than 0.'),
     ]
 
+    @api.multi
+    def unlink(self):
+        """
+        It is not possible to delete in the finalized state.
+        :return:
+        """
+        if self.state == 'finalized':
+            raise ValidationError('It is not possible to delete in the finalized state.')
+        return super(McMaintenance, self).unlink()
+
     @api.onchange('date')
     def _onchange_date(self):
         if not self.date:
