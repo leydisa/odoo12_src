@@ -5,6 +5,8 @@
         <!-- MENU -->
         <menuitem id="menu_maintenance_control" name="Maintenance Control"/>
         <menuitem id="menu_report" parent="menu_maintenance_control" name="Reports" sequence="10"/>
+            <menuitem id="maintenance_received_report" parent="menu_report" name="Maintenance Received" sequence="10" action="action_maintenance_received"/>
+
         <menuitem id="menu_supplier" parent="menu_maintenance_control" name="Supplier" sequence="20" action="action_mc_partner_supplier"/>
         <menuitem id="menu_external_customer" parent="menu_maintenance_control" name="Customer" sequence="30" action="action_mc_partner_external_customer"/>
         <menuitem id="menu_internal_customer" parent="menu_maintenance_control" name="Entity" sequence="40" action="action_mc_partner_internal_customer"/>

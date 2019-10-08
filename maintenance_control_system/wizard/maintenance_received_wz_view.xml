@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_maintenance_received_wz" model="ir.ui.view">
+            <field name="name">maintenance.received.wz</field>
+            <field name="model">maintenance.received.wz</field>
+            <field name="arch" type="xml">
+            <form string="Maintenance Received Wz">
+                <group col="4" colspan="6">
+                    <field name="date_from"/>
+                    <newline/>
+                    <field name="date_to"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_maintenance_received" model="ir.actions.act_window">
+            <field name="name">Maintenance Received</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.received.wz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_mc_maintenance" />
+            <field name="binding_type">report</field>
+        </record>
+
+</odoo>

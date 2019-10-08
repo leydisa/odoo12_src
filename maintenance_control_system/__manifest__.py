@@ -22,6 +22,9 @@
         'report/report.xml',
         'report/rp_work_order.xml',
         'report/rp_maintenance.xml',
+        'report/rp_maintenance_received.xml',
+
+        'wizard/maintenance_received_wz_view.xml',
 
         'views/mc_nomenclator.xml',
         'views/mc_partner.xml',
