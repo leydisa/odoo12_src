@@ -50,18 +50,18 @@ class McMaintenance(models.Model):
             return labor
 
     @api.one
-    @api.depends('line_ids', 'labor_hours', 'labor_days')
+    @api.depends('line_ids', 'labor_hours', 'labor_days', 'labor_technicians')
     def _compute_coste(self):
         """
         Calculate the current price of the material.
         :return:
         """
-        self.coste_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids])
-        if self.labor_id:
-            self.coste_cuc += self.labor_days * self.labor_hours * self.labor_id.coste_cuc
-        self.coste_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids])
-        if self.labor_id:
-            self.coste_cup += self.labor_days * self.labor_hours * self.labor_id.coste_cup
+        self.coste_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids]) + \
+            (self.labor_days * self.labor_hours * self.labor_technicians * self.labor_id.coste_cuc
+             if self.labor_id else 0)
+        self.coste_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids]) + \
+            (self.labor_days * self.labor_hours * self.labor_technicians * self.labor_id.coste_cup
+            if self.labor_id else 0)
         self.mt = self.coste_cuc + self.coste_cup
 
     @api.constrains('datetime_start', 'datetime_stop', 'mt')
@@ -133,7 +133,8 @@ class McMaintenance(models.Model):
                                default=_default_current_labor_coste,
                                ondelete='restrict')
     labor_days = fields.Integer('Worked Days')
-    labor_hours = fields.Float('Hours Worked per Day')
+    labor_hours = fields.Float('Hours Worked/Day')
+    labor_technicians = fields.Integer('Technicians')
     line_ids = fields.One2many('mc.maintenance.line', 'maintenance_id',
                                string='Lines')
     coste_cuc = fields.Float(string='CUC',
@@ -145,11 +146,6 @@ class McMaintenance(models.Model):
     mt = fields.Float(string='MT',
                       compute=_compute_coste,
                       store=True)
-
-    _sql_constraints = [
-        ('labor_days_zero', 'CHECK (labor_days > 0)', 'The labor days must be greater than 0.'),
-        ('labor_hours_zero', 'CHECK (labor_hours > 0)', 'The labor hours must be greater than 0.'),
-    ]
 
     @api.multi
     def unlink(self):

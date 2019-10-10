@@ -13,18 +13,20 @@ class MaintenanceReceivedWz(models.TransientModel):
 
     date_from = fields.Date(string='Date From',
                             required=True,
-                            default=datetime.now().strftime('%Y-%m-01'))
+                            default=datetime.now().strftime('%Y-01-01'))
     date_to = fields.Date(string='Date To',
                           required=True,
-                          default=str(datetime.now() +
-                                      relativedelta.relativedelta(months=+1, day=1, days=-1))[:10])
+                          default=datetime.now().strftime('%Y-12-31'))
+    entity_id = fields.Many2one('mc.partner',
+                                string='Entity',
+                                domain=[('supplier', '=', False),
+                                        ('type', '=', 'internal')])
+    supplier_id = fields.Many2one('mc.partner',
+                                  string='Proveedor',
+                                  domain=[('supplier', '=', True)])
+
 
     @api.multi
     def print_report(self):
-        active_ids = self.env.context.get('active_ids', [])
-        datas = {
-             'ids': active_ids,
-             'model': 'mc.maintenence',
-             'form': self.read()[0]
-        }
+        datas = {'form': self.read(['date_from', 'date_to', 'entity_id', 'supplier_id'])[0]}
         return self.env.ref('maintenance_control_system.report_maintenance_received_id').report_action([], data=datas)

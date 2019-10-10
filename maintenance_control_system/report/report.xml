@@ -24,12 +24,12 @@
 
         <report
                 id="report_maintenance_received_id"
-                string="Maintenance"
+                string="Maintenance Received"
                 model="mc.maintenance"
                 report_type="qweb-pdf"
                 name="maintenance_control_system.rp_maintenance_received"
                 file="maintenance_control_system.rp_maintenance_received"
-                print_report_name="'Maintenance - %s' % (object.code)"
+                print_report_name="'Maintenance Received"
         />
 
     </data>
