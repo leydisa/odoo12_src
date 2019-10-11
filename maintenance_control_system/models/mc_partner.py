@@ -4,7 +4,6 @@
 
 import datetime
 from odoo import api, fields, models, tools,  _
-from odoo.exceptions import ValidationError
 
 
 def _get_years():
@@ -119,6 +118,12 @@ class McPartner(models.Model):
             ids = self.env['mc.budget.to.provided'].search([('year', '=', year)]).mapped('entity_id').ids
             args += [('supplier', '=', False)]
             args += [('type', '=', 'internal')]
+            args += [('id', 'in', ids)]
+        elif m_type == 'etr':
+            ids = self.env['mc.budget.to.received'].search([]).mapped('entity_id').ids
+            args += [('id', 'in', ids)]
+        elif m_type == 'etp':
+            ids = self.env['mc.budget.to.provided'].search([]).mapped('entity_id').ids
             args += [('id', 'in', ids)]
         return super(McPartner, self)._name_search(name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid)
 

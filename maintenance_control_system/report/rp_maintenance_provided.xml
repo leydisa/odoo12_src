@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="rp_maintenance_provided">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <div class="col-xs-12" t-if="data['form']['type'] == 'imp'">
+                            <h2>Internal Maintenance Provided</h2>
+                        </div>
+
+                        <div class="col-xs-12" t-if="data['form']['type'] == 'emp'">
+                            <h2>External Maintenance Provided</h2>
+                        </div>
+
+                        <div class="row mt32 mb32">
+                            <div class="col-3">
+                                <strong>From</strong>:
+                                <br/>
+                                <span t-esc="data['form']['date_from']"/>
+                            </div>
+                        </div>
+                        <div class="row mt32 mb32">
+                            <div class="col-3">
+                                <strong>To</strong>:
+                                <br/>
+                                <span t-esc="data['form']['date_to']"/>
+                            </div>
+                        </div>
+                        <div class="row mt32 mb32" t-if="data['form']['partner_id']">
+                            <div class="col-3">
+                                <strong>Entity</strong>:
+                                <br/>
+                                <span t-esc="data['form']['partner_id'][1]"/>
+                            </div>
+                        </div>
+                        <div class="row mt32 mb32" t-if="data['form']['partner1_id']">
+                            <div class="col-3">
+                                <strong>Supplier</strong>:
+                                <br/>
+                                <span t-esc="data['form']['partner1_id'][1]"/>
+                            </div>
+                        </div>
+
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th t-if="not data['form']['partner_id'] and data['form']['type'] == 'imp'">Entity that received</th>
+                                    <th t-if="not data['form']['partner_id'] and data['form']['type'] == 'emp'">Customer</th>
+                                    <th t-if="not data['form']['partner1_id']">Entity that provided</th>
+                                    <th>CUC</th>
+                                    <th>CUP</th>
+                                    <th>MT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="docs" t-as="o">
+                                    <td>
+                                        <span t-esc="o.code"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.datetime_start"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.datetime_stop"/>
+                                    </td>
+                                    <td t-if="not data['form']['partner_id']">
+                                        <span t-esc="o.partner_id.name"/>
+                                    </td>
+                                    <td t-if="not data['form']['partner1_id']">
+                                        <span t-esc="o.partner1_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.coste_cuc"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.coste_cup"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="o.mt"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

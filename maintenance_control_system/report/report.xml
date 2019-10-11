@@ -32,5 +32,15 @@
                 print_report_name="'Maintenance Received"
         />
 
+        <report
+                id="report_maintenance_provided_id"
+                string="Maintenance Provided"
+                model="mc.maintenance"
+                report_type="qweb-pdf"
+                name="maintenance_control_system.rp_maintenance_provided"
+                file="maintenance_control_system.rp_maintenance_provided"
+                print_report_name="'Maintenance Provided"
+        />
+
     </data>
 </odoo>

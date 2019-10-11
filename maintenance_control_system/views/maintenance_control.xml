@@ -6,6 +6,8 @@
         <menuitem id="menu_maintenance_control" name="Maintenance Control"/>
         <menuitem id="menu_report" parent="menu_maintenance_control" name="Reports" sequence="10"/>
             <menuitem id="maintenance_received_report" parent="menu_report" name="Maintenance Received" sequence="10" action="action_maintenance_received"/>
+            <menuitem id="internal_maintenance_provided_report" parent="menu_report" name="Internal Maintenance Received" sequence="20" action="action_internal_maintenance_provided"/>
+            <menuitem id="external_maintenance_received_report" parent="menu_report" name="External Maintenance Received" sequence="30" action="action_external_maintenance_provided"/>
 
         <menuitem id="menu_supplier" parent="menu_maintenance_control" name="Supplier" sequence="20" action="action_mc_partner_supplier"/>
         <menuitem id="menu_external_customer" parent="menu_maintenance_control" name="Customer" sequence="30" action="action_mc_partner_external_customer"/>

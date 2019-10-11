@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="view_internal_maintenance_provided_wz" model="ir.ui.view">
+            <field name="name">internal.maintenance.provided.wz</field>
+            <field name="model">maintenance.provided.wz</field>
+            <field name="arch" type="xml">
+            <form string="Maintenance Received Wz">
+                <group col="4">
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="partner_id" string="Entity that received" domain="[('type', '=', 'internal')]" colspan="4" options='{"no_open": True, "no_create": True}' context="{'m_type': 'etr'}"/>
+                    <field name="partner1_id" string="Entity that provided" colspan="4" options='{"no_open": True, "no_create": True}' context="{'m_type': 'etp'}"/>
+                    <field name="type" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="view_external_maintenance_provided_wz" model="ir.ui.view">
+            <field name="name">external.maintenance.provided.wz</field>
+            <field name="model">maintenance.provided.wz</field>
+            <field name="arch" type="xml">
+            <form string="Maintenance Received Wz">
+                <group col="4">
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="partner_id" string="Customer" domain="[('type', '=', 'external')]" colspan="4" options='{"no_open": True, "no_create": True}' />
+                    <field name="partner1_id" string="Entity that provided" colspan="4" options='{"no_open": True, "no_create": True}' context="{'m_type': 'etp'}"/>
+                    <field name="type" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_internal_maintenance_provided" model="ir.actions.act_window">
+            <field name="name">Internal Maintenance Received</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.provided.wz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'type': 'imp'}</field>
+            <field name="binding_model_id" ref="model_mc_maintenance" />
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_internal_maintenance_provided_view_form" model="ir.actions.act_window.view">
+            <field name="sequence">2</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_internal_maintenance_provided_wz"/>
+            <field name="act_window_id" ref="action_internal_maintenance_provided"/>
+        </record>
+
+        <record id="action_external_maintenance_provided" model="ir.actions.act_window">
+            <field name="name">External Maintenance Received</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.provided.wz</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'type': 'emp'}</field>
+            <field name="binding_model_id" ref="model_mc_maintenance" />
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="action_external_maintenance_provided_view_form" model="ir.actions.act_window.view">
+            <field name="sequence">2</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_external_maintenance_provided_wz"/>
+            <field name="act_window_id" ref="action_external_maintenance_provided"/>
+        </record>
+
+</odoo>

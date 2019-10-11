@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
-from dateutil import relativedelta
 
 from odoo import api, fields, models
 
@@ -24,7 +23,6 @@ class MaintenanceReceivedWz(models.TransientModel):
     supplier_id = fields.Many2one('mc.partner',
                                   string='Proveedor',
                                   domain=[('supplier', '=', True)])
-
 
     @api.multi
     def print_report(self):
