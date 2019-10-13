@@ -32,8 +32,8 @@
                             <span t-esc="data['form']['partner1_id'][1]"/>
                         </div>
 
-                        <table class="table table-sm">
-                            <thead>
+                        <table class="table table-bordered table-sm" style="width:100%">
+                                <thead class="thead-light">
                                 <tr>
                                     <th>Code</th>
                                     <th>From</th>
@@ -41,9 +41,6 @@
                                     <th t-if="not data['form']['partner_id'] and data['form']['type'] == 'imp'">Entity that received</th>
                                     <th t-if="not data['form']['partner_id'] and data['form']['type'] == 'emp'">Customer</th>
                                     <th t-if="not data['form']['partner1_id']">Entity that provided</th>
-                                    <th>CUC</th>
-                                    <th>CUP</th>
-                                    <th>MT</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,15 +59,6 @@
                                     </td>
                                     <td t-if="not data['form']['partner1_id']">
                                         <span t-esc="o.partner1_id.name"/>
-                                    </td>
-                                    <td>
-                                        <span t-esc="o.coste_cuc"/>
-                                    </td>
-                                    <td>
-                                        <span t-esc="o.coste_cup"/>
-                                    </td>
-                                    <td>
-                                        <span t-esc="o.mt"/>
                                     </td>
                                 </tr>
                             </tbody>

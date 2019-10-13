@@ -25,7 +25,7 @@ class report_rp_maintenance_provided(models.AbstractModel):
             dom += [('partner1_id', '=', data['form']['partner1_id'][0])]
         dom += [('type', '=', data['form']['type'])]
         dom += [('state', '=', 'finalized')]
-        docs = self.env['mc.maintenance'].search(dom)
+        docs = self.env['mc.maintenance'].search(dom, order='partner_id')
         return {
             'doc_model': 'mc.maintenance',
             'docs': docs,
