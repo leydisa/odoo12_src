@@ -15,7 +15,7 @@
                     <field name="partner1_id" string="Supplier"/>
                     <field name="coste_cuc"/>
                     <field name="coste_cup"/>
-                    <field name="mt"/>
+                    <field name="coste_mt"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -33,7 +33,7 @@
                     <field name="partner1_id" string="Entity that provides"/>
                     <field name="coste_cuc"/>
                     <field name="coste_cup"/>
-                    <field name="mt"/>
+                    <field name="coste_mt"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -51,7 +51,7 @@
                     <field name="partner1_id" string="Entity that provides"/>
                     <field name="coste_cuc"/>
                     <field name="coste_cup"/>
-                    <field name="mt"/>
+                    <field name="coste_mt"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -100,7 +100,7 @@
                                 <group class="oe_subtotal_footer oe_right">
                                     <field name="coste_cuc" widget="monetary"/>
                                     <field name="coste_cup" widget="monetary"/>
-                                    <field name="mt"/>
+                                    <field name="coste_mt"/>
                                 </group>
                             </page>
                         </notebook>
@@ -154,9 +154,19 @@
                                     </tree>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right">
-                                    <field name="coste_cuc"/>
+                                    <field name="coste_cuc" string=" Total CUC"/>
                                     <field name="coste_cup"/>
-                                    <field name="mt"/>
+                                    <field name="coste_mt" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="material_cuc" string=" Material CUC"/>
+                                    <field name="material_cup"/>
+                                    <field name="material_mt" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="labor_cuc" string=" Labor CUC"/>
+                                    <field name="labor_cup"/>
+                                    <field name="labor_mt" class="oe_subtotal_footer_separator"/>
                                 </group>
                             </page>
                         </notebook>
@@ -212,10 +222,20 @@
                                         <field name="maintenance_id" invisible="1"/>
                                     </tree>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right">
+                                <group string="Labor" class="oe_subtotal_footer oe_right">
+                                    <field name="labor_cuc"/>
+                                    <field name="labor_cup"/>
+                                    <field name="labor_mt" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group string="Material" class="oe_subtotal_footer oe_right">
+                                    <field name="material_cuc"/>
+                                    <field name="material_cup"/>
+                                    <field name="material_mt" class="oe_subtotal_footer_separator"/>
+                                </group>
+                                <group string="Total" class="oe_subtotal_footer oe_right">
                                     <field name="coste_cuc"/>
                                     <field name="coste_cup"/>
-                                    <field name="mt"/>
+                                    <field name="coste_mt" class="oe_subtotal_footer_separator"/>
                                 </group>
                             </page>
                         </notebook>
@@ -233,6 +253,7 @@
                     <field name="date"/>
                     <field name="partner_id" string="Entity"/>
                     <field name="partner1_id" string="Supplier"/>
+                    <field name="state"/>
                     <separator/>
                     <group expand="0" string="Group By">
                         <filter string="State" name='state' domain="[]" context="{'group_by':'partner_id'}"/>

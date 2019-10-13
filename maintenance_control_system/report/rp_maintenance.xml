@@ -8,146 +8,250 @@
                     <t t-call="web.external_layout">
                         <div class="page">
 
-                            <div class="row" t-if="o.type == 'mr'">
-                                <div class="col-xs-12">
-                                    <h2>Maintenance Received</h2>
-                                </div>
+                            <div t-if="o.type == 'mr'">
+                                <h2>Maintenance Received</h2>
                             </div>
 
-                            <div class="row" t-if="o.type == 'imp'">
-                                <div class="col-xs-12">
-                                    <h2>Internal Maintenance Provided</h2>
-                                </div>
+                            <div t-if="o.type == 'imp'">
+                                <h2>Internal Maintenance Provided</h2>
                             </div>
 
-                            <div class="row" t-if="o.type == 'emp'">
-                                <div class="col-xs-12">
-                                    <h2>External Maintenance Provided</h2>
-                                </div>
+                            <div t-if="o.type == 'emp'">
+                                <h2>External Maintenance Provided</h2>
                             </div>
 
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <strong>Code:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.code"/>
-                                </div>
-                                <div class="col-xs-2">
-                                    <strong>Date:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.date"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-5"/>
-                                <div class="col-xs-2">
-                                    <strong>Created by:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.user_id.name"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <strong>Datetime Start:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.datetime_start"/>
-                                </div>
-                                <div class="col-xs-2">
-                                    <strong>Datetime Stop:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.datetime_stop"/>
-                                </div>
-                            </div>
+                            <table class="table-sm" style="width:100%">
+                                <tr>
+                                    <td style="width:50%">
+                                        <strong>Code:</strong>
+                                        <span t-esc="o.code"/>
+                                    </td>
+                                    <td style="width:50%">
+                                        <strong>Date:</strong>
+                                        <span t-esc="o.date"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td/>
+                                    <td>
+                                        <strong>Created by:</strong>
+                                        <span t-esc="o.user_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>Datetime Start:</strong>
+                                        <span t-esc="o.datetime_start"/>
+                                    </td>
+                                    <td>
+                                        <strong>Datetime Stop:</strong>
+                                        <span t-esc="o.datetime_stop"/>
+                                    </td>
+                                </tr>
+                            </table>
                             <hr/>
-                             <div class="row">
-                                <div class="col-xs-2">
-                                    <strong t-if="o.type in ('mr', 'imp')">Entity:</strong>
-                                    <strong t-if="o.type == 'emp'">Customer:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.partner_id.name"/>
-                                </div>
-                                <div class="col-xs-2">
-                                    <strong>Province:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.province_id.name"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-2" t-if="o.contract_id">
-                                    <strong>Contract:</strong>
-                                </div>
-                                <div class="col-xs-8">
-                                    <span t-esc="o.contract_id.code"/>
-                                </div>
-                            </div>
+                            <table class="table-sm" style="width:100%">
+                                <tr>
+                                    <td style="width:50%">
+                                        <strong t-if="o.type in ('mr', 'imp')">
+                                            Entity:
+                                        </strong>
+                                        <strong t-if="o.type == 'emp'">
+                                            Customer:
+                                        </strong>
+                                        <span t-esc="o.partner_id.name"/>
+                                    </td>
+                                    <td style="width:50%">
+                                        <strong>Province:</strong>
+                                        <span t-esc="o.province_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="o.contract_id">
+                                    <td>
+                                        <strong>Contract:</strong>
+                                        <span t-esc="o.contract_id.code"/>
+                                    </td>
+                                    <td/>
+                                </tr>
+                            </table>
                             <hr/>
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <strong t-if="o.type == 'mr'">Proveedor:</strong>
-                                    <strong t-if="o.type in ('imp', 'emp')">Entity:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.partner1_id.name"/>
-                                </div>
-                                <div class="col-xs-2">
-                                    <strong>Province:</strong>
-                                </div>
-                                <div class="col-xs-3">
-                                    <span t-esc="o.province1_id.name"/>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-2" t-if="o.contract1_id">
-                                    <strong>Contract:</strong>
-                                </div>
-                                <div class="col-xs-8">
-                                    <span t-esc="o.contract1_id.code"/>
-                                </div>
-                            </div>
+                            <table class="table-sm" style="width:100%">
+                                <tr>
+                                    <td style="width:50%">
+                                        <strong t-if="o.type == 'mr'">
+                                            Proveedor:
+                                        </strong>
+                                        <strong t-if="o.type in ('imp', 'emp')">
+                                            Entity:
+                                        </strong>
+                                        <span t-esc="o.partner1_id.name"/>
+                                    </td>
+                                    <td style="width:50%">
+                                        <strong>Province:</strong>
+                                        <span t-esc="o.province1_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr t-if="o.contract1_id">
+                                    <td>
+                                        <strong>Contract:</strong>
+                                        <span t-esc="o.contract1_id.code"/>
+                                    </td>
+                                    <td/>
+                                </tr>
+                            </table>
                             <hr/>
-                            <div class="row">
-                                <div class="col-xs-2">
-                                    <strong>Observation:</strong>
-                                </div>
-                                <div class="col-xs-8">
-                                    <span t-esc="o.observation"/>
-                                </div>
+                            <div>
+                                <strong>Observation:</strong>
+                                <span t-esc="o.observation"/>
                             </div>
-
                             <br/>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <table class="table table-condensed"
-                                           style="border-bottom: 0px solid white !important;">
-                                        <thead>
-                                            <tr>
-                                                <th>Equipment</th>
-                                                <th>Qty</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr t-foreach="o.line_ids" t-as="l">
-                                                <td>
-                                                    <span t-field="l.equipment_id.name"/>
-                                                </td>
-                                                <td>
-                                                    <t>
-                                                        <span t-field="l.qty"/>
-                                                    </t>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                    </tfoot>
-                                    </table>
-                                </div>
+                            <table class="table table-bordered table-sm" style="width:100%">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th style="width:80%">Equipment</th>
+                                        <th style="width:20%">Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-if="o.labor_id">
+                                        <td>
+                                            <span>Technicians</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.labor_technicians"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="o.labor_id">
+                                        <td>
+                                            <span>Worked Days</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.labor_days"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-if="o.labor_id">
+                                        <td>
+                                            <span>Hours Worked/Day</span>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.labor_hours"/>
+                                        </td>
+                                    </tr>
+                                    <tr t-foreach="o.line_ids" t-as="l">
+                                        <td>
+                                            <span t-field="l.equipment_id.name"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="l.qty"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br/>
+                            <table class="table table-bordered table-sm" style="width:100%" t-if="o.labor_id">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th colspan="9" class="text-center">Maintenance Coste</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3" class="text-center">Labor</th>
+                                        <th colspan="3" class="text-center">Material</th>
+                                        <th colspan="3" class="text-center">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">
+                                            CUC
+                                        </td>
+                                        <td class="text-center">
+                                            CUP
+                                        </td>
+                                        <td class="text-center">
+                                            MT
+                                        </td>
+                                        <td class="text-center">
+                                            CUC
+                                        </td>
+                                        <td class="text-center">
+                                            CUP
+                                        </td>
+                                        <td class="text-center">
+                                            MT
+                                        </td>
+                                        <td class="text-center">
+                                            CUC
+                                        </td>
+                                        <td class="text-center">
+                                            CUP
+                                        </td>
+                                        <td class="text-center">
+                                            MT
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-right">
+                                            <span t-field="o.labor_cuc"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.labor_cup"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.labor_mt"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.material_cuc"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.material_cup"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.material_mt"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.coste_cuc"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.coste_cup"/>
+                                        </td>
+                                        <td class="text-right">
+                                            <span t-field="o.coste_mt"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="right" style="width:100%">
+                                <table class="table table-bordered table-sm" style="width:35%" t-if="not o.labor_id">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th colspan="3" class="text-center">Maintenance Coste</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">
+                                                CUC
+                                            </td>
+                                            <td class="text-center">
+                                                CUP
+                                            </td>
+                                            <td class="text-center">
+                                                MT
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-right">
+                                                <span t-field="o.coste_cuc"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.coste_cup"/>
+                                            </td>
+                                            <td class="text-right">
+                                                <span t-field="o.coste_mt"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </t>

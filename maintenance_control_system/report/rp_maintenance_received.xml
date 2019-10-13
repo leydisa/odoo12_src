@@ -7,37 +7,25 @@
                 <t t-call="web.external_layout">
                     <div class="page">
 
-                        <div class="col-xs-12">
+                        <div>
                             <h2>Maintenance Received</h2>
                         </div>
 
-                        <div class="row mt32 mb32">
-                            <div class="col-3">
-                                <strong>From</strong>:
-                                <br/>
-                                <span t-esc="data['form']['date_from']"/>
-                            </div>
+                        <div>
+                            <strong>From</strong>:
+                            <span t-esc="data['form']['date_from']"/>
                         </div>
-                        <div class="row mt32 mb32">
-                            <div class="col-3">
-                                <strong>To</strong>:
-                                <br/>
-                                <span t-esc="data['form']['date_to']"/>
-                            </div>
+                        <div>
+                            <strong>To</strong>:
+                            <span t-esc="data['form']['date_to']"/>
                         </div>
-                        <div class="row mt32 mb32" t-if="data['form']['entity_id']">
-                            <div class="col-3">
-                                <strong>Entity</strong>:
-                                <br/>
-                                <span t-esc="data['form']['entity_id'][1]"/>
-                            </div>
+                        <div t-if="data['form']['entity_id']">
+                            <strong>Entity</strong>:
+                            <span t-esc="data['form']['entity_id'][1]"/>
                         </div>
-                        <div class="row mt32 mb32" t-if="data['form']['supplier_id']">
-                            <div class="col-3">
-                                <strong>Supplier</strong>:
-                                <br/>
-                                <span t-esc="data['form']['supplier_id'][1]"/>
-                            </div>
+                        <div t-if="data['form']['supplier_id']">
+                            <strong>Supplier</strong>:
+                            <span t-esc="data['form']['supplier_id'][1]"/>
                         </div>
 
                         <table class="table table-sm">

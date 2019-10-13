@@ -50,19 +50,41 @@ class McMaintenance(models.Model):
             return labor
 
     @api.one
-    @api.depends('line_ids', 'labor_hours', 'labor_days', 'labor_technicians')
-    def _compute_coste(self):
+    @api.depends('labor_technicians', 'labor_days', 'labor_hours')
+    def _compute_labor_coste(self):
         """
-        Calculate the current price of the material.
+        Calculate cost of the labor.
         :return:
         """
-        self.coste_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids]) + \
-            (self.labor_days * self.labor_hours * self.labor_technicians * self.labor_id.coste_cuc
-             if self.labor_id else 0)
-        self.coste_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids]) + \
-            (self.labor_days * self.labor_hours * self.labor_technicians * self.labor_id.coste_cup
-            if self.labor_id else 0)
-        self.mt = self.coste_cuc + self.coste_cup
+        self.labor_cuc = self.labor_days * self.labor_hours * \
+                         self.labor_technicians * \
+                         (self.labor_id.coste_cuc if self.labor_id else 0)
+        self.labor_cup = self.labor_days * self.labor_hours * \
+                         self.labor_technicians * \
+                         (self.labor_id.coste_cup if self.labor_id else 0)
+        self.labor_mt = self.labor_cuc + self.labor_cup
+
+    @api.one
+    @api.depends('line_ids')
+    def _compute_material_coste(self):
+        """
+        Calculate cost of the material.
+        :return:
+        """
+        self.material_cuc = sum([x.qty * x.equipment_id.coste_cuc for x in self.line_ids])
+        self.material_cup = sum([x.qty * x.equipment_id.coste_cup for x in self.line_ids])
+        self.material_mt = self.material_cuc + self.material_cup
+
+    @api.one
+    @api.depends('labor_cuc', 'labor_cup', 'material_cuc', 'material_cup')
+    def _compute_total_coste(self):
+        """
+        Calculate total cost.
+        :return:
+        """
+        self.coste_cuc = self.labor_cuc + self.material_cuc
+        self.coste_cup = self.labor_cup + self.material_cup
+        self.coste_mt = self.coste_cuc + self.coste_cup
 
     @api.constrains('datetime_start', 'datetime_stop', 'mt')
     def _check_data(self):
@@ -137,15 +159,33 @@ class McMaintenance(models.Model):
     labor_technicians = fields.Integer('Technicians')
     line_ids = fields.One2many('mc.maintenance.line', 'maintenance_id',
                                string='Lines')
+    labor_cuc = fields.Float(string='CUC',
+                             compute=_compute_labor_coste,
+                             store=True)
+    labor_cup = fields.Float(string='CUP',
+                             compute=_compute_labor_coste,
+                             store=True)
+    labor_mt = fields.Float(string='MT',
+                            compute=_compute_labor_coste,
+                            store=True)
+    material_cuc = fields.Float(string='CUC',
+                                compute=_compute_material_coste,
+                                store=True)
+    material_cup = fields.Float(string='CUP',
+                                compute=_compute_material_coste,
+                                store=True)
+    material_mt = fields.Float(string='MT',
+                               compute=_compute_material_coste,
+                               store=True)
     coste_cuc = fields.Float(string='CUC',
-                             compute=_compute_coste,
+                             compute=_compute_total_coste,
                              store=True)
     coste_cup = fields.Float(string='CUP',
-                             compute=_compute_coste,
+                             compute=_compute_total_coste,
                              store=True)
-    mt = fields.Float(string='MT',
-                      compute=_compute_coste,
-                      store=True)
+    coste_mt = fields.Float(string='MT',
+                            compute=_compute_total_coste,
+                            store=True)
 
     @api.multi
     def unlink(self):
@@ -153,8 +193,8 @@ class McMaintenance(models.Model):
         It is not possible to delete in the finalized state.
         :return:
         """
-        if self.state == 'finalized':
-            raise ValidationError('It is not possible to delete in the finalized state.')
+        # if self.state == 'finalized':
+        #     raise ValidationError('It is not possible to delete in the finalized state.')
         return super(McMaintenance, self).unlink()
 
     @api.onchange('date')
@@ -202,8 +242,10 @@ class McMaintenance(models.Model):
         # Check data
         if len(self.line_ids) == 0:
             raise ValidationError(_('Missing maintenance detail.'))
-        if self.mt == 0:
-            raise ValidationError(_('You cannot finalized maintenance with cost 0.'))
+        if self.labor_id and self.labor_mt == 0:
+            raise ValidationError(_('You cannot finalized maintenance with labor cost 0.'))
+        if self.material_mt == 0:
+            raise ValidationError(_('You cannot finalized maintenance with material cost 0.'))
         # Generate the code
         if self.type == 'mr':
             self.code = self.env['ir.sequence'].next_by_code('mc.maintenance.received.sequence')

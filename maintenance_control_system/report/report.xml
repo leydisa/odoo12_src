@@ -25,7 +25,7 @@
         <report
                 id="report_maintenance_received_id"
                 string="Maintenance Received"
-                model="mc.maintenance"
+                model="maintenance.received.wz"
                 report_type="qweb-pdf"
                 name="maintenance_control_system.rp_maintenance_received"
                 file="maintenance_control_system.rp_maintenance_received"
@@ -35,10 +35,11 @@
         <report
                 id="report_maintenance_provided_id"
                 string="Maintenance Provided"
-                model="mc.maintenance"
+                model="maintenance.provided.wz"
                 report_type="qweb-pdf"
                 name="maintenance_control_system.rp_maintenance_provided"
                 file="maintenance_control_system.rp_maintenance_provided"
+                paperformat="maintenance_control_system.paperformat_landscape"
                 print_report_name="'Maintenance Provided"
         />
 

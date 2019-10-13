@@ -92,12 +92,19 @@
                 <kanban class="o_kanban_mobile">
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
-                                <div>
-                                    <strong><field name="name"/></strong>
-                                </div>
-                                <div>
-                                    <span><field name="province_id"/>&amp;nbsp;</span>
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record">
+                                <div style="padding-right: 10px;">
+                                <field name="image_medium" nolabel="1" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "image_medium", "size": [75, 75]}'/>
+                                    </div>
+                                <div class="oe_kanban_details">
+                                    <div class="o_kanban_record_headings">
+                                        <strong>
+                                            <h5><field name="name"/></h5>
+                                        </strong>
+                                    </div>
+                                    <div>
+                                        <span><field name="province_id"/>&amp;nbsp;</span>
+                                    </div>
                                 </div>
                             </div>
                         </t>

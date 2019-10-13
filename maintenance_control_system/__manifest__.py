@@ -12,9 +12,15 @@
     'sequence': 13,
     'demo': [
     ],
+    'depends': [
+        'base_setup',
+        'resource',
+        'web',
+    ],
     'data': [
         'data/data.xml',
         'data/sequence.xml',
+        'data/paper_format.xml',
 
         'security/security.xml',
         'security/ir.model.access.csv',
