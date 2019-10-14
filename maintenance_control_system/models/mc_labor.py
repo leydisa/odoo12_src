@@ -20,15 +20,6 @@ class McLabor(models.Model):
         date = fields.Date.from_string(fields.Date.today())
         return '{}-01-01'.format(date)
 
-    @api.one
-    @api.depends('maintenance_ids')
-    def _compute_used(self):
-        """
-        Calculate the current coste of the material.
-        :return:
-        """
-        self.used = self.env['mc.maintenance'].search([('labor_id', '=', self.id)], limit=1) == 1
-
     date = fields.Date(string='Creation Date',
                        required=True,
                        index=True,
@@ -37,9 +28,17 @@ class McLabor(models.Model):
                              required=True)
     coste_cup = fields.Float(string='CUP',
                              required=True)
-    used = fields.Boolean(compute=_compute_used,
-                          store=True)
+    used = fields.Boolean(store=False)
     maintenance_ids = fields.One2many('mc.maintenance', 'labor_id')
+
+    @api.multi
+    def read(self, fields=None, load='_classic_read'):
+
+        obj = super(McLabor, self).read(fields=fields, load=load)
+        if 'used' in fields:
+            obj[0]['used'] = len(self.env['mc.maintenance'].search(
+                [('labor_id', '=', obj[0]['id'])], limit=1)) != 0
+        return obj
 
     _sql_constraints = [
         ('coste_zero', 'CHECK (coste_cuc > 0 or coste_cup > 0)', 'The coste must be greater than 0.'),
