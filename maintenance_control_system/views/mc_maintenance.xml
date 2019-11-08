@@ -378,5 +378,6 @@
             <field name="view_id" ref="view_mc_external_maintenance_provided_form"/>
             <field name="act_window_id" ref="action_mc_external_maintenance_provided"/>
         </record>
+
     </data>
 </odoo>

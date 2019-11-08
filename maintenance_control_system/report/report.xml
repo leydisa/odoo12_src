@@ -29,7 +29,7 @@
                 report_type="qweb-pdf"
                 name="maintenance_control_system.rp_maintenance_received"
                 file="maintenance_control_system.rp_maintenance_received"
-                print_report_name="'Maintenance Received"
+                print_report_name="Maintenance Received"
         />
 
         <report
@@ -40,7 +40,7 @@
                 name="maintenance_control_system.rp_maintenance_provided"
                 file="maintenance_control_system.rp_maintenance_provided"
                 paperformat="maintenance_control_system.paperformat_landscape"
-                print_report_name="'Maintenance Provided"
+                print_report_name="Maintenance Provided"
         />
 
     </data>

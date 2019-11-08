@@ -27,8 +27,6 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-            <field name="binding_model_id" ref="model_mc_maintenance" />
-            <field name="binding_type">report</field>
         </record>
 
 </odoo>

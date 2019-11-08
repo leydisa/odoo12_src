@@ -49,8 +49,6 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
             <field name="context">{'type': 'imp'}</field>
-            <field name="binding_model_id" ref="model_mc_maintenance" />
-            <field name="binding_type">report</field>
         </record>
 
         <record id="action_internal_maintenance_provided_view_form" model="ir.actions.act_window.view">
@@ -68,8 +66,6 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
             <field name="context">{'type': 'emp'}</field>
-            <field name="binding_model_id" ref="model_mc_maintenance" />
-            <field name="binding_type">report</field>
         </record>
 
         <record id="action_external_maintenance_provided_view_form" model="ir.actions.act_window.view">
