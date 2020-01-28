@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_equiptment_tree" model="ir.ui.view">
+            <field name="name">view.equiptment.tree</field>
+            <field name="model">equipment</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Equipment">
+                    <field name="serial"/>
+                    <field name="description"/>
+                    <field name="type_id"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_equiptment_form" model="ir.ui.view">
+            <field name="name">view.equipment.form</field>
+            <field name="model">equipment</field>
+            <field name="arch" type="xml">
+                <form string="Equipment">
+                    <sheet>
+                        <group col="6">
+                            <field name="serial"/>
+                            <field name="type_id" options="{'no_create_edit': True}"/>
+                            <field name="date"/>
+                            <field name="description" colspan="6"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_equipment_type" model="ir.actions.act_window">
+            <field name="name">Equipment Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclator</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type_id.code','=','equipment_type')]</field>
+            <field name="context">{'type': 'equipment_type'}</field>
+        </record>
+
+        <record id="action_equipment" model="ir.actions.act_window">
+            <field name="name">Equipment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">equipment</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

@@ -7,7 +7,7 @@
             <field name="model">repair</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
-                <tree string="Contacts">
+                <tree string="Repair">
                     <field name="code"/>
                     <field name="date"/>
                     <field name="user_id"/>
@@ -20,7 +20,7 @@
             <field name="name">view.repair.form</field>
             <field name="model">repair</field>
             <field name="arch" type="xml">
-                <form string="Contract">
+                <form string="Repair">
                     <header>
                         <button name="action_finalized" states="edition" string="Finalized" type="object" class="oe_highlight"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft, finalized" />

@@ -26,6 +26,7 @@
         'security/ir.model.access.csv',
 
         'views/nomenclator.xml',
+        'views/equipment.xml',
         'views/repair.xml',
         'menu.xml',
     ],
