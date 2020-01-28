@@ -160,7 +160,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">mc.partner</field>
             <field name="view_type">form</field>
-            <field name="view_mode">,tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="domain">[('supplier', '=', True)]</field>
             <field name="context">{'supplier' : True}</field>
             <field name="filter" eval="True"/>

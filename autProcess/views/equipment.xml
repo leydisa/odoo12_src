@@ -24,7 +24,7 @@
                     <sheet>
                         <group col="6">
                             <field name="serial"/>
-                            <field name="type_id" options="{'no_create_edit': True}"/>
+                            <field name="type_id" options="{'no_create_edit': True, 'no_open': True}"/>
                             <field name="date"/>
                             <field name="description" colspan="6"/>
                         </group>

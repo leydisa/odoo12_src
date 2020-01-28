@@ -11,7 +11,7 @@ class Equipment(models.Model):
     Class that represent Equipment.
     """
     _name = "equipment"
-    _rec_name = 'serial'
+    _rec_name = 'description'
     _description = 'Equipment'
 
     def _get_default_date(self):
