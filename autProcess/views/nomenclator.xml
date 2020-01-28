@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_nomenclator_tree" model="ir.ui.view">
+            <field name="name">view.nomenclator.tree</field>
+            <field name="model">nomenclator</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Contacts">
+                    <field name="name"/>
+                    <field name="name" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_nomenclator_form" model="ir.ui.view">
+            <field name="name">view.nomenclator.form</field>
+            <field name="model">nomenclator</field>
+            <field name="arch" type="xml">
+                <form string="Contract">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <field name="type_id" invisible="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_equipment_type" model="ir.actions.act_window">
+            <field name="name">Equipment Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclator</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type_id.code','=','equipment_type')]</field>
+            <field name="context">{'type': 'equipment_type'}</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="module_autprocess" model="ir.module.category">
+            <field name="name">AutProcess</field>
+            <field name="description">AutProcess</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="group_logistics_manager" model="res.groups">
+            <field name="name">Responsable de Logística</field>
+            <field name="category_id" ref="module_autprocess"/>
+        </record>
+
+    </data>
+</odoo>

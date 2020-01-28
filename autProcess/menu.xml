@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- MENU -->
+        <menuitem id="menu_autProcess" name="autProcess"/>
+        <menuitem id="menu_sale" parent="menu_autProcess" name="Sale" sequence="10"/>
+            <menuitem id="menu_customer" parent="menu_sale" name="Customer" sequence="10" action="action_repair"/>
+
+        <menuitem id="menu_post_sale" parent="menu_autProcess" name="Post Sale" sequence="20"/>
+            <menuitem id="menu_repair" parent="menu_post_sale" name="Repair" sequence="10" action="action_repair"/>
+
+        <menuitem id="menu_report" parent="menu_autProcess" name="Report" sequence="30"/>
+            <menuitem id="menu_user" parent="menu_report" name="Users" sequence="10" action="action_repair"/>
+            <menuitem id="menu_trace" parent="menu_report" name="Traces" sequence="20" action="action_repair"/>
+            <menuitem id="menu_indicator" parent="menu_report" name="Indicators" sequence="30" action="action_repair"/>
+
+        <menuitem id="menu_setting" parent="menu_autProcess" name="Setting" sequence="40"/>
+            <menuitem id="menu_equipment_type" parent="menu_setting" name="Equipment Type" sequence="10" action="action_equipment_type"/>
+
+    </data>
+</odoo>

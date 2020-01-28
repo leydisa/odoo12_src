@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- repair_sequence -->
+        <record id="sequence_repair" model="ir.sequence">
+            <field name="name">Repair Sequence</field>
+            <field name="code">repair.sequence</field>
+            <field name="prefix">REP/%(year)s</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">6</field>
+        </record>
+
+    </data>
+</odoo>
