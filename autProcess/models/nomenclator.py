@@ -46,3 +46,15 @@ class Nomenclator(models.Model):
     name = fields.Char(string='Name',
                        required=True)
 
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form', toolbar=False,
+                        submenu=False):
+        res = super(Nomenclator, self).fields_view_get(view_id, view_type,
+                                                       toolbar=toolbar,
+                                                       submenu=False)
+        if view_type == 'tree' and self._context.get('tree', '') == 'tree':
+            pass
+            # install_id = self.env.ref('base.action_server_module_immediate_install').id
+            # action = [rec for rec in res['toolbar']['action'] if rec.get('id', False) != install_id]
+            # res['toolbar'] = {'action': action}
+        return res

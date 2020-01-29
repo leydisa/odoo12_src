@@ -18,6 +18,7 @@
         <menuitem id="menu_setting" parent="menu_autProcess" name="Setting" sequence="40"/>
             <menuitem id="menu_equipment_type" parent="menu_setting" name="Equipment Type" sequence="10" action="action_equipment_type"/>
             <menuitem id="menu_equipment" parent="menu_setting" name="Equipment" sequence="20" action="action_equipment"/>
+            <menuitem id="menu_symptom" parent="menu_setting" name="Symptom" sequence="30" action="action_symptom_type"/>
 
     </data>
 </odoo>

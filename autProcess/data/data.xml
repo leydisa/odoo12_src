@@ -27,5 +27,160 @@
             <field name="type_id" ref="equipment_type"/>
         </record>
 
+        <record model="nomenclator.type" id="symptom_type">
+            <field name="code">symptom_type</field>
+            <field name="name">Symptom Type</field>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_01">
+            <field name="name">ERRORE COMUNICAZIONE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_02">
+            <field name="name">INFILTRAZIONE D'ACQUA</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_03">
+            <field name="name">ERRORE DI MISURA/LETTURA</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_04">
+            <field name="name">FOLGORAZIONE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_05">
+            <field name="name">ERRORE ESECUZIONE OFF</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_06">
+            <field name="name">SOSPETTO ALTO CONSUMO</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_07">
+            <field name="name">NON SI AVVIA</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_08">
+            <field name="name">NESSUNA SEGNALAZIONE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_09">
+            <field name="name">FUORIUSCITA DI ACIDO DALLE BATTERIE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_10">
+            <field name="name">SI BLOCCA</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_11">
+            <field name="name">RIENTRATO PER AGG.HW e/o AGG.SOFTWARE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_12">
+            <field name="name">RIENTRATO PER CALIBRAZIONE E CERTIFICAZIONE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_13">
+            <field name="name">USCITE GUASTE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_14">
+            <field name="name">INGRESSI GUASTI</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_55">
+            <field name="name">BATTERIA SCARICA</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_16">
+            <field name="name">NON FUNZIONA SEGNALE X</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_17">
+            <field name="name">ERRORE GPS</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_18">
+            <field name="name">RIENTRO DA CONTO VISIONE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_19">
+            <field name="name">MISURE A 0</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_20">
+            <field name="name">NON SI COLLEGA IN BLUETHOOT</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_21">
+            <field name="name">ERRORE DI MISURA TEMPERATURA</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_22">
+            <field name="name">DISPLAY NON FUNZIONANTE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_23">
+            <field name="name">NON PRENDE CORRETTAMENTE LO 0</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_24">
+            <field name="name">PERDE L'ORARIO</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_25">
+            <field name="name">ETHERNET NON FUNZIONANTE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_26">
+            <field name="name">LETTORE CARD NON FUNZIONANTE</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_27">
+            <field name="name">CARICO ESTERNO NON FUNZIONANTE(SIRENA)</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_28">
+            <field name="name">NON TIENE LE CONFIGURAZIONI</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_29">
+            <field name="name">NON CARICA</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
+        <record model="nomenclator" id="symptom_type_30">
+            <field name="name">FLASH KO</field>
+            <field name="type_id" ref="symptom_type"/>
+        </record>
+
     </data>
 </odoo>
