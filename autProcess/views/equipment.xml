@@ -2,8 +2,8 @@
 <odoo>
     <data>
 
-        <record id="view_equiptment_tree" model="ir.ui.view">
-            <field name="name">view.equiptment.tree</field>
+        <record id="view_equipment_tree" model="ir.ui.view">
+            <field name="name">view.equipment.tree</field>
             <field name="model">equipment</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
@@ -16,7 +16,7 @@
             </field>
         </record>
 
-        <record id="view_equiptment_form" model="ir.ui.view">
+        <record id="view_equipment_form" model="ir.ui.view">
             <field name="name">view.equipment.form</field>
             <field name="model">equipment</field>
             <field name="arch" type="xml">
@@ -30,6 +30,19 @@
                         </group>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record id="view_equipment_search" model="ir.ui.view">
+            <field name="name">view.equipment.search</field>
+            <field name="model">equipment</field>
+            <field name="arch" type="xml">
+                <search string="Equipment">
+                    <field name="serial"/>
+                    <field name="type_id"/>
+                    <field name="date"/>
+                    <field name="description"/>
+                </search>
             </field>
         </record>
 

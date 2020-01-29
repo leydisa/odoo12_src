@@ -5,7 +5,7 @@
         <!-- MENU -->
         <menuitem id="menu_autProcess" name="autProcess"/>
         <menuitem id="menu_sale" parent="menu_autProcess" name="Sale" sequence="10"/>
-            <menuitem id="menu_customer" parent="menu_sale" name="Customer" sequence="10" action="action_repair"/>
+            <menuitem id="menu_customer" parent="menu_sale" name="Customer" sequence="10" action="action_customer"/>
 
         <menuitem id="menu_post_sale" parent="menu_autProcess" name="Post Sale" sequence="20"/>
             <menuitem id="menu_repair" parent="menu_post_sale" name="Repair" sequence="10" action="action_repair"/>

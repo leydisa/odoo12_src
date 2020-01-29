@@ -3,4 +3,5 @@
 
 from . import nomenclator
 from . import equipment
+from . import customer
 from . import repair

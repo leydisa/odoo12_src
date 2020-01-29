@@ -22,16 +22,47 @@
             <field name="arch" type="xml">
                 <form string="Repair">
                     <header>
-                        <button name="action_finalized" states="edition" string="Finalized" type="object" class="oe_highlight"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft, finalized" />
+                        <button name="action_received" states="draft" string="Received" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft, received, closed, closed" />
                     </header>
                     <sheet>
-                        <group col="6">
+                        <group col="10">
                             <field name="code" colspan="2"/>
-                            <field name="date" colspan="2" attrs="{'readonly': [('state','=', 'finalized')]}"/>
+                            <sepatator colspan="4"/>
+                            <field name="date" colspan="4"/>
+                            <field name="user_id" colspan="10"/>
                         </group>
+                        <notebook>
+                            <page string="Reception and Acceptance">
+                                <group col="12">
+                                    <label for="photo1" string="Photos of the closed package"/>
+                                    <field name="photo1" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo1", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="photo2" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo2", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="photo3" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo3", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="photo4" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo4", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="photo5" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo5", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="ddt" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="attachment_ids" widget="many2many_binary" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                </group>
+                            </page>
+                            <page string="GINSHT" attrs="{'invisible': [('state','=', 'draft')]}">
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record id="view_repair_search" model="ir.ui.view">
+            <field name="name">view.repair.search</field>
+            <field name="model">repair</field>
+            <field name="arch" type="xml">
+                <search string="Repair">
+                    <field name="code"/>
+                    <field name="date"/>
+                    <field name="user_id"/>
+                    <field name="state"/>
+                </search>
             </field>
         </record>
 

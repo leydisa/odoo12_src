@@ -27,6 +27,7 @@
 
         'views/nomenclator.xml',
         'views/equipment.xml',
+        'views/customer.xml',
         'views/repair.xml',
         'menu.xml',
     ],

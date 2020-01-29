@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_customer_tree" model="ir.ui.view">
+            <field name="name">view.customer.tree</field>
+            <field name="model">customer</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="customer">
+                    <field name="name"/>
+                    <field name="address"/>
+                    <field name="email"/>
+                    <field name="at_hw"/>
+                    <field name="at_sw"/>
+                    <field name="sla"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_customer_form" model="ir.ui.view">
+            <field name="name">view.customer.form</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <form string="Customer">
+                    <sheet>
+                        <group col="12">
+                            <field name="name" colspan="12"/>
+                            <field name="address" colspan="12"/>
+                            <field name="email" colspan="6" widget="email"/>
+                            <field name="phone" colspan="6" widget="phone"/>
+                            <field name="at_hw" colspan="6"/>
+                            <field name="at_sw" colspan="6"/>
+                            <field name="sla" colspan="6" widget="float_time"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_customer_search" model="ir.ui.view">
+            <field name="name">view.customer.search</field>
+            <field name="model">customer</field>
+            <field name="arch" type="xml">
+                <search string="Customer">
+                    <field name="name"/>
+                    <field name="address"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_customer" model="ir.actions.act_window">
+            <field name="name">Customer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">customer</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

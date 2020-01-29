@@ -6,7 +6,7 @@
         <record id="sequence_repair" model="ir.sequence">
             <field name="name">Repair Sequence</field>
             <field name="code">repair.sequence</field>
-            <field name="prefix">REP/%(year)s</field>
+            <field name="prefix">RMA/%(year)s</field>
             <field eval="1" name="number_next"/>
             <field eval="1" name="number_increment"/>
             <field name="padding">6</field>

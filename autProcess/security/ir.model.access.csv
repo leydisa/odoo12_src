@@ -1,9 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 ,,,,,
-access_repair_logistic_manager,repair,model_repair,group_logistics_manager,1,1,1,1
+access_customer_logistic_manager,customer,model_customer,group_logistics_manager,1,1,1,1
 ,,,,,
 access_nomenclator_type_logistic_manager,nomenclator.type,model_nomenclator_type,group_logistics_manager,1,1,1,1
 ,,,,,
 access_nomenclator_logistic_manager,nomenclator,model_nomenclator,group_logistics_manager,1,1,1,1
 ,,,,,
 access_equipment_logistic_manager,equipment,model_equipment,group_logistics_manager,1,1,1,1
+,,,,,
+access_repair_logistic_manager,repair,model_repair,group_logistics_manager,1,1,1,1
