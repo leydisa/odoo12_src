@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_diagnosis_tree" model="ir.ui.view">
+            <field name="name">view.diagnosis.tree</field>
+            <field name="model">nomenclator</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Nomenclator">
+                    <field name="name"/>
+                    <field name="code" string="Repair Type"/>
+                    <field name="type_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_diagnosis_type" model="ir.actions.act_window">
+            <field name="name">Diagnosis Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">nomenclator</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('type_id.code','=','diagnosis_type')]</field>
+            <field name="context">{'readonly': True, 'tree_view_ref': 'autProcess.view_diagnosis_tree'}</field>
+        </record>
+
+    </data>
+</odoo>

@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <tree string="Nomenclator">
                     <field name="name"/>
-                    <field name="name" invisible="1"/>
+                    <field name="type_id" invisible="1"/>
                 </tree>
             </field>
         </record>
@@ -33,10 +33,9 @@
             <field name="name">Symptom Type</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">nomenclator</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree, form</field>
+            <field name="view_mode">tree</field>
             <field name="domain">[('type_id.code','=','symptom_type')]</field>
-            <field name="context">{'type': 'symptom_type'}</field>
+            <field name="context">{'readonly': True}</field>
         </record>
 
     </data>

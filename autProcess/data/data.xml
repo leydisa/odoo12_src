@@ -182,5 +182,369 @@
             <field name="type_id" ref="symptom_type"/>
         </record>
 
+        <record model="nomenclator.type" id="diagnosis_type">
+            <field name="code">diagnosis_type</field>
+            <field name="name">Diagnosis Type</field>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_01">
+            <field name="code">B</field>
+            <field name="name">CANALI DANNEGGIATI</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_02">
+            <field name="code">B</field>
+            <field name="name">MODEM DANNEGGIATO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_03">
+            <field name="code">B</field>
+            <field name="name">CICLICO DANNEGGIATO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_04">
+            <field name="code">B/C</field>
+            <field name="name">DANNO GENERICO DA EXTRATENSIONE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_05">
+            <field name="code">B/C</field>
+            <field name="name">DANNO GENERICO DA INFILTRAZIONE D'ACQUA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_06">
+            <field name="code">C</field>
+            <field name="name">MEMBRANA DANNEGGATA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_07">
+            <field name="code">A</field>
+            <field name="name">SIM CORROTTA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_08">
+            <field name="code">A</field>
+            <field name="name">ERRORE CARATTERIZZAZIONE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_09">
+            <field name="code">B</field>
+            <field name="name">HID GUASTA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_10">
+            <field name="code">B</field>
+            <field name="name">ALTO CONSUMO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_11">
+            <field name="code">C</field>
+            <field name="name">PROGRAMMAZIONE NUOVO APPARATO SOSTITUTIVO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_12">
+            <field name="code">A</field>
+            <field name="name">NESSUNA ANOMALIA RISCONTRATA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_13">
+            <field name="code">C</field>
+            <field name="name">ACIDO BATTERIE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_14">
+            <field name="code">A</field>
+            <field name="name">ERRORE DI PROGRAMMAZIONE O PROBLEMA SOFTWARE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_15">
+            <field name="code">B</field>
+            <field name="name">DANNO SU 3V3</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_16">
+            <field name="code">A</field>
+            <field name="name">AGGIORNAMENTO HW O FW</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_17">
+            <field name="code">B</field>
+            <field name="name">SCHEDA VISIBILMENTE DANNEGGIATA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_18">
+            <field name="code">B</field>
+            <field name="name">DANNO DA INVERSIONE ALIMENTAZIONE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_19">
+            <field name="code">A</field>
+            <field name="name">SIM CORROTTA O NON FUNZIONANTE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_20">
+            <field name="code">B</field>
+            <field name="name">ALTO CONSUMO (NO PROBLEMI D'IMPEDENZA)</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_21">
+            <field name="code">B</field>
+            <field name="name">C300 E C301 IN CORTO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_22">
+            <field name="code">C</field>
+            <field name="name">BATTERIA SCESA SOTTO IL LIVELLO MINIMO DI RICARICA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_23">
+            <field name="code">C</field>
+            <field name="name">APPARATO OBSOLETO DA SOSTITUIRE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_24">
+            <field name="code">B</field>
+            <field name="name">MODULO TAM KO O IN ERRORE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_25">
+            <field name="code">A</field>
+            <field name="name">SD KO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_26">
+            <field name="code">B</field>
+            <field name="name">ALIMENTATORE KO O SCHEDA ALI KO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_27">
+            <field name="code">A</field>
+            <field name="name">ERRORE FW</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_28">
+            <field name="code">B/C</field>
+            <field name="name">DANNO MECCANICO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_29">
+            <field name="code">B</field>
+            <field name="name">MOSFET W/RFID GUASTI</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_30">
+            <field name="code">A</field>
+            <field name="name">RIENTRATO INSIEME AD UN'APPARATO PERCHE' AGGANCIATO, CON NESSUNA ANOMALIA SEGNALATA.DA NON VERIFICARE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_31">
+            <field name="code">B</field>
+            <field name="name">ERRORI FLASH</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_32">
+            <field name="code">B/C</field>
+            <field name="name">NON EFFETTUA CORRETTAMENTE CICLO DI CARICA E/O NON PASSA IL COLLAUDO DOPO LA RIPAZIONE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_33">
+            <field name="code">B</field>
+            <field name="name">CIRCUITO GPS GUASTO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_34">
+            <field name="code">B</field>
+            <field name="name">PERDE ORARIO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_35">
+            <field name="code">B</field>
+            <field name="name">CONNETTORE DI RETE ROTTO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_36">
+            <field name="code">B</field>
+            <field name="name">BLUETHOOT KO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_37">
+            <field name="code">A/B</field>
+            <field name="name">CAVI CANALI INTERROTTI</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_38">
+            <field name="code">B/C</field>
+            <field name="name">DANNO CIRCUITO ANALOGICO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_39">
+            <field name="code">B</field>
+            <field name="name">DANNO SU CIRCUITO MODEM</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_40">
+            <field name="code">C</field>
+            <field name="name">NON CONFORMITA ' ATEX</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_41">
+            <field name="code">B</field>
+            <field name="name">MOSFET DI CARICA GUASTI</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_42">
+            <field name="code">A</field>
+            <field name="name">FUSIBILE GUASTO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_43">
+            <field name="code">B</field>
+            <field name="name">SEGNALE XBAT GUASTO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_44">
+            <field name="code">B</field>
+            <field name="name">INGRESSI GUASTI</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_45">
+            <field name="code">B</field>
+            <field name="name">USCITE GUASTE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_46">
+            <field name="code">B</field>
+            <field name="name">RS485 GUASTA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_47">
+            <field name="code">B</field>
+            <field name="name">LETTORE CARD GUASTO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_48">
+            <field name="code">B</field>
+            <field name="name">AUDIO KO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_49">
+            <field name="code">B</field>
+            <field name="name">TOUCH NON FUNZIONANTE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_50">
+            <field name="code">B</field>
+            <field name="name">HYBRID DANNEGGIATA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_51">
+            <field name="code">B/C</field>
+            <field name="name">CHI GUASTA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_52">
+            <field name="code">B</field>
+            <field name="name">MISURA MALE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_53">
+            <field name="code">A</field>
+            <field name="name">MEMBRANA SPORCA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_54">
+            <field name="code">C</field>
+            <field name="name">PERDE LA CALIBRAZIONE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_55">
+            <field name="code">C</field>
+            <field name="name">TORSIONE CAVI SENSORE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_56">
+            <field name="code">C</field>
+            <field name="name">ERRORI DURANTE LA CALIBRAZIONE</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_57">
+            <field name="code">A</field>
+            <field name="name">BATTERIA RICARICATA</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_58">
+            <field name="code">B</field>
+            <field name="name">GPS GUASTO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_59">
+            <field name="code">A</field>
+            <field name="name">CAVO ANTENNA TRANCIATO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
+        <record model="nomenclator" id="diagnosis_60">
+            <field name="name">NON RISCONTRATO QUANTO SEGNALATO</field>
+            <field name="type_id" ref="diagnosis_type"/>
+        </record>
+
     </data>
 </odoo>
