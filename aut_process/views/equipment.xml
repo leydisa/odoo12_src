@@ -53,7 +53,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('type_id.code','=','equipment_type')]</field>
-            <field name="context">{'type': 'equipment_type'}</field>
+            <field name="context">{'type': 'equipment_type', 'hide_code': True}</field>
         </record>
 
         <record id="action_equipment" model="ir.actions.act_window">

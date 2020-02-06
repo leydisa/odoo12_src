@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="report_repair_label_id"
+                string="Label"
+                model="repair"
+                report_type="qweb-pdf"
+                name="aut_process.rp_repair_label"
+                file="aut_process.rp_repair_label"
+                print_report_name="'Label - %s' % (object.code)"
+                menu="False"
+                paperformat="aut_process.paperformat_custom"/>
+        />
+
+    </data>
+</odoo>

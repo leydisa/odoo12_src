@@ -9,3 +9,5 @@ access_nomenclator_logistic_manager,nomenclator,model_nomenclator,group_logistic
 access_equipment_logistic_manager,equipment,model_equipment,group_logistics_manager,1,1,1,1
 ,,,,,
 access_repair_logistic_manager,repair,model_repair,group_logistics_manager,1,1,1,1
+,,,,,
+access_repair_equipment_logistic_manager,repair.equipment,model_repair_equipment,group_logistics_manager,1,1,1,1

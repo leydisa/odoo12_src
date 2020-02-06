@@ -2,7 +2,7 @@
 <odoo>
     <data>
 
-        <record id="module_autprocess" model="ir.module.category">
+        <record id="module_aut_process" model="ir.module.category">
             <field name="name">AutProcess</field>
             <field name="description">AutProcess</field>
             <field name="sequence">1</field>
@@ -10,7 +10,7 @@
 
         <record id="group_logistics_manager" model="res.groups">
             <field name="name">Responsable de Logística</field>
-            <field name="category_id" ref="module_autprocess"/>
+            <field name="category_id" ref="module_aut_process"/>
         </record>
 
     </data>

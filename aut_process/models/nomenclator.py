@@ -7,7 +7,7 @@ from odoo import api, fields, models, _
 
 class NomenclatorType(models.Model):
     """
-    Class that represent Nomenclator Type.
+    Class representing a nomenclator yype.
     """
     _name = 'nomenclator.type'
     _rec_name = 'name'
@@ -21,7 +21,7 @@ class NomenclatorType(models.Model):
 
 class Nomenclator(models.Model):
     """
-    Class that represent Nomenclator.
+    Class representing a nomenclator.
     """
     _name = 'nomenclator'
     _rec_name = 'name'
@@ -51,17 +51,11 @@ class Nomenclator(models.Model):
                         submenu=False):
         """
         If it comes in readonly context it is not allowed to create or delete.
-        :param view_id:
-        :param view_type:
-        :param toolbar:
-        :param submenu:
-        :return:
         """
         res = super(Nomenclator, self).fields_view_get(view_id, view_type,
                                                        toolbar=toolbar,
                                                        submenu=False)
         if view_type == 'tree' and self._context.get('readonly', False):
-            res['arch'] = res['arch'].\
-                replace('<tree string="Nomenclator">',
-                        '<tree delete="false" create="false">')
+            res['arch'] = res['arch'].replace('<tree string="Nomenclator">',
+                                              '<tree delete="false" create="false">')
         return res

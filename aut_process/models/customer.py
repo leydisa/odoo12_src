@@ -7,11 +7,11 @@ from odoo import api, fields, models, _
 
 class Customer(models.Model):
     """
-    Class that represent Equipment.
+    Class representing a customer.
     """
     _name = "customer"
     _rec_name = 'name'
-    _description = 'Customer'
+    _description = 'Customer.'
 
     name = fields.Char('Name',
                        required=True)
@@ -24,7 +24,7 @@ class Customer(models.Model):
     at_hw = fields.Boolean('Contrato de AT HW')
     at_sw = fields.Boolean('Contrato de AT SW')
     sla = fields.Float('SLA (hours)',
-                         required=True)
+                       required=True)
 
     _sql_constraints = [
         ('name_uniq', 'unique (name)',

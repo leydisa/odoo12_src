@@ -8,6 +8,7 @@
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Nomenclator">
+                    <field name="code" invisible="context.get('hide_code', False)"/>
                     <field name="name"/>
                     <field name="type_id" invisible="1"/>
                 </tree>
@@ -29,13 +30,13 @@
             </field>
         </record>
 
-        <record id="action_symptom_type" model="ir.actions.act_window">
-            <field name="name">Symptom Type</field>
+        <record id="action_symptom" model="ir.actions.act_window">
+            <field name="name">Symptom</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">nomenclator</field>
             <field name="view_mode">tree</field>
             <field name="domain">[('type_id.code','=','symptom_type')]</field>
-            <field name="context">{'readonly': True}</field>
+            <field name="context">{'readonly':  True, 'hide_code': True}</field>
         </record>
 
     </data>

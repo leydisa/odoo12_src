@@ -25,6 +25,9 @@
         'security/security.xml',
         'security/ir.model.access.csv',
 
+        'report/report.xml',
+        'report/rp_repair_label.xml',
+
         'views/nomenclator.xml',
         'views/diagnosis.xml',
         'views/equipment.xml',

@@ -23,6 +23,7 @@
                 <form string="Repair">
                     <header>
                         <button name="action_received" states="draft" string="Received" type="object" class="oe_highlight"/>
+                        <button name="print_label" string="Print Label"  type="object" class="btn-primary"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft, received, closed, closed" />
                     </header>
                     <sheet>
@@ -35,6 +36,7 @@
                         <notebook>
                             <page string="Reception and Acceptance">
                                 <group col="12">
+                                    <field name="customer_id" colspan="12" options="{'no_open': True, 'no_create_edit': True}" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
                                     <label for="photo1" string="Photos of the closed package"/>
                                     <field name="photo1" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo1", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
                                     <field name="photo2" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo2", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
@@ -43,6 +45,15 @@
                                     <field name="photo5" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo5", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
                                     <field name="ddt" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
                                     <field name="attachment_ids" widget="many2many_binary" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="equipment_ids" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}">
+                                        <tree editable="bottom">
+                                            <field name="equipment_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                                            <field name="type_id"/>
+                                            <field name="description"/>
+                                            <field name="repair_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                    <field name="date_accept" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
                                 </group>
                             </page>
                             <page string="GINSHT" attrs="{'invisible': [('state','=', 'draft')]}">

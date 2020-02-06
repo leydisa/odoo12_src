@@ -8,11 +8,11 @@ from odoo.exceptions import ValidationError
 
 class Repair(models.Model):
     """
-    Class that represent Repair.
+    Class representing a repair.
     """
-    _description = 'Repair'
-    _name = "repair"
+    _name = 'repair'
     _rec_name = 'code'
+    _description = 'Repair'
 
     def _get_default_date(self):
         """
@@ -39,6 +39,7 @@ class Repair(models.Model):
                        readonly=True,
                        index=True,
                        default=_get_default_date)
+    date_accept = fields.Date('Acceptance Date')
     user_id = fields.Many2one('res.users',
                               string='Created by',
                               readonly=True,
@@ -68,7 +69,10 @@ class Repair(models.Model):
                               'that may be relevant for the repair. '
                               'The photos are saved and loaded in the relative '
                               'technical file.')
-
+    customer_id = fields.Many2one('customer',
+                                  string='Customer')
+    equipment_ids = fields.One2many('repair.equipment', 'repair_id',
+                                    string='Equipos')
     observation = fields.Text('Observation')
     state = fields.Selection([('draft', 'Draft'),
                               ('received', 'Received'),
@@ -102,3 +106,29 @@ class Repair(models.Model):
         """
         self.code = self.env['ir.sequence'].next_by_code('repair.sequence')
         self.state = 'received'
+
+    def print_label(self):
+        """
+        Imprime las etiqueta.
+        :return:
+        """
+        self.ensure_one()
+        return self.env.ref('aut_process.report_repair_label_id').\
+            report_action(None, data={})
+
+
+class RepairEquipment(models.Model):
+    """
+    Class representing the equipment of a repair.
+    """
+    _name = 'repair.equipment'
+    _rec_name = 'equipment_id'
+    _description = 'Equipment of a repair'
+
+    repair_id = fields.Many2one('repair',
+                                ondelete='cascade')
+    equipment_id = fields.Many2one('equipment',
+                                   string='Serial',
+                                   required=True)
+    type_id = fields.Many2one(related='equipment_id.type_id')
+    description = fields.Char(related='equipment_id.description')
