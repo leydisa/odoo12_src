@@ -54,6 +54,8 @@
                                         </tree>
                                     </field>
                                     <field name="date_accept" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="symptom_id" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
+                                    <field name="diagnosis_id" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>
                                 </group>
                             </page>
                             <page string="GINSHT" attrs="{'invisible': [('state','=', 'draft')]}">

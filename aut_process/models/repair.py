@@ -73,6 +73,18 @@ class Repair(models.Model):
                                   string='Customer')
     equipment_ids = fields.One2many('repair.equipment', 'repair_id',
                                     string='Equipos')
+    type_id = fields.Many2one('nomenclator',
+                              string='Type',
+                              required=True,
+                              domain=[('type_id.code', '=', 'equipment_type')])
+    symptom_id = fields.Many2one('nomenclator',
+                                 string='Symptom',
+                                 required=True,
+                                 domain=[('type_id.code', '=', 'symptom_type')])
+    diagnosis_id = fields.Many2one('nomenclator',
+                                   string='Diagnosis',
+                                   required=True,
+                                   domain=[('type_id.code', '=', 'diagnosis_type')])
     observation = fields.Text('Observation')
     state = fields.Selection([('draft', 'Draft'),
                               ('received', 'Received'),
