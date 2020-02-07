@@ -15,6 +15,7 @@
     'depends': [
         'base_setup',
         'resource',
+        'website_mail',
         'web',
     ],
     'data': [

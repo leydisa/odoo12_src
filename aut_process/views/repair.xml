@@ -24,6 +24,7 @@
                     <header>
                         <button name="action_received" states="draft" string="Received" type="object" class="oe_highlight"/>
                         <button name="print_label" string="Print Label"  type="object" class="btn-primary"/>
+                        <button name="send_first_notification" string="Send First Notification"  type="object" class="btn-primary"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft, received, closed, closed" />
                     </header>
                     <sheet>

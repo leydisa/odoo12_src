@@ -4,6 +4,8 @@
 
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import ValidationError
+from . import common
+from .common import FIRST_CUSTOMER_NOTIFICATION
 
 
 class Repair(models.Model):
@@ -125,8 +127,28 @@ class Repair(models.Model):
         :return:
         """
         self.ensure_one()
-        return self.env.ref('aut_process.report_repair_label_id').\
+        return self.env.ref('aut_process.report_repair_label_id'). \
             report_action(None, data={})
+
+    @api.multi
+    def send_first_notification(self):
+        """
+
+        :return:
+        """
+        self.ensure_one()
+        mails = self.env['mail.mail']
+        mail_values = {
+            'email_from': 'leydisa@gmail.com',
+            'email_to': 'leydisa@gmail.com',
+            'subject': 'First Customer Notification',
+            'body_html': FIRST_CUSTOMER_NOTIFICATION,
+            'notification': True,
+            'mailing_id': self.id}
+        mail = self.env['mail.mail'].create(mail_values)
+        mails |= mail
+        mails.send()
+        return True
 
 
 class RepairEquipment(models.Model):
