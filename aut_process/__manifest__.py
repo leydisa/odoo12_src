@@ -33,6 +33,7 @@
         'views/diagnosis.xml',
         'views/equipment.xml',
         'views/customer.xml',
+        'views/reception.xml',
         'views/repair.xml',
         'menu.xml',
     ],

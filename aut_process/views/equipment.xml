@@ -8,8 +8,8 @@
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Equipment">
+                    <field name="name"/>
                     <field name="serial"/>
-                    <field name="description"/>
                     <field name="type_id"/>
                     <field name="date"/>
                 </tree>
@@ -22,11 +22,11 @@
             <field name="arch" type="xml">
                 <form string="Equipment">
                     <sheet>
-                        <group col="6">
-                            <field name="serial"/>
-                            <field name="type_id" options="{'no_create_edit': True, 'no_open': True}"/>
-                            <field name="date"/>
-                            <field name="description" colspan="6"/>
+                        <group col="12">
+                            <field name="name" colspan="8"/>
+                            <field name="date" colspan="4"/>
+                            <field name="serial" colspan="3"/>
+                            <field name="type_id" options="{'no_create_edit': True, 'no_open': True}" colspan="6"/>
                         </group>
                     </sheet>
                 </form>
@@ -38,10 +38,10 @@
             <field name="model">equipment</field>
             <field name="arch" type="xml">
                 <search string="Equipment">
+                    <field name="name"/>
                     <field name="serial"/>
                     <field name="type_id"/>
                     <field name="date"/>
-                    <field name="description"/>
                 </search>
             </field>
         </record>
