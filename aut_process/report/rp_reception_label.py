@@ -4,9 +4,9 @@
 from odoo import api, models
 
 
-class report_rp_repair_label(models.AbstractModel):
-    _name = 'report.aut_process.rp_repair_label'
-    _description = 'Repair Label'
+class report_rp_reception_label(models.AbstractModel):
+    _name = 'report.aut_process.rp_reception_label'
+    _description = 'Reception Label'
 
     @api.model
     def _get_report_values(self, docids, data=None):
@@ -16,9 +16,9 @@ class report_rp_repair_label(models.AbstractModel):
         :param data:
         :return:
         """
-        docs = self.env['repair'].browse(docids)
+        docs = self.env['reception'].browse(docids)
         return {
-            'doc_model': 'repair',
+            'doc_model': 'reception',
             'docs': docs,
             'data': dict(
                 data,

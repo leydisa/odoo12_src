@@ -2,91 +2,61 @@
 <odoo>
     <data>
 
-<!--        <record id="view_repair_tree" model="ir.ui.view">-->
-<!--            <field name="name">view.repair.tree</field>-->
-<!--            <field name="model">repair</field>-->
-<!--            <field eval="8" name="priority"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <tree string="Repair">-->
-<!--                    <field name="code"/>-->
-<!--                    <field name="date"/>-->
-<!--                    <field name="user_id"/>-->
-<!--                    <field name="state"/>-->
-<!--                </tree>-->
-<!--            </field>-->
-<!--        </record>-->
+        <record id="view_repair_tree" model="ir.ui.view">
+            <field name="name">view.repair.tree</field>
+            <field name="model">repair</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Repair">
+                    <field name="code"/>
+                    <field name="equipment_id"/>
+                    <field name="type_id"/>
+                    <field name="serial"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
 
-<!--        <record id="view_repair_form" model="ir.ui.view">-->
-<!--            <field name="name">view.repair.form</field>-->
-<!--            <field name="model">repair</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <form string="Repair">-->
-<!--                    <header>-->
-<!--                        <button name="action_received" states="draft" string="Received" type="object" class="oe_highlight"/>-->
-<!--                        <button name="print_label" string="Print Label"  type="object" class="btn-primary"/>-->
-<!--                        <button name="send_first_notification" string="Send First Notification"  type="object" class="btn-primary"/>-->
-<!--                        <field name="state" widget="statusbar" statusbar_visible="draft, received, closed, closed" />-->
-<!--                    </header>-->
-<!--                    <sheet>-->
-<!--                        <group col="10">-->
-<!--                            <field name="code" colspan="2"/>-->
-<!--                            <sepatator colspan="4"/>-->
-<!--                            <field name="date" colspan="4"/>-->
-<!--                            <field name="user_id" colspan="10"/>-->
-<!--                        </group>-->
-<!--                        <notebook>-->
-<!--                            <page string="Reception and Acceptance">-->
-<!--                                <group col="12">-->
-<!--                                    <field name="customer_id" colspan="12" options="{'no_open': True, 'no_create_edit': True}" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <label for="photo1" string="Photos of the closed package"/>-->
-<!--                                    <field name="photo1" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo1", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="photo2" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo2", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="photo3" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo3", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="photo4" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo4", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="photo5" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo5", "size": [110,110]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="ddt" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="attachment_ids" widget="many2many_binary" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="equipment_ids" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}">-->
-<!--                                        <tree editable="bottom">-->
-<!--                                            <field name="equipment_id" options="{'no_open': True, 'no_create_edit': True}"/>-->
-<!--                                            <field name="type_id"/>-->
-<!--                                            <field name="description"/>-->
-<!--                                            <field name="repair_id" invisible="1"/>-->
-<!--                                        </tree>-->
-<!--                                    </field>-->
-<!--                                    <field name="date_accept" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="symptom_id" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                    <field name="diagnosis_id" colspan="12" attrs="{'required': [('state','=', 'draft')], 'readonly': [('state','!=', 'draft')]}"/>-->
-<!--                                </group>-->
-<!--                            </page>-->
-<!--                            <page string="GINSHT" attrs="{'invisible': [('state','=', 'draft')]}">-->
-<!--                            </page>-->
-<!--                        </notebook>-->
-<!--                    </sheet>-->
-<!--                </form>-->
-<!--            </field>-->
-<!--        </record>-->
+        <record id="view_repair_form" model="ir.ui.view">
+            <field name="name">view.repair.form</field>
+            <field name="model">repair</field>
+            <field name="arch" type="xml">
+                <form string="Repair">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="draft, received, closed, closed" />
+                    </header>
+                    <sheet>
+                        <group col="12">
+                            <field name="code" colspan="2"/>
+                            <sepatator colspan="10"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
-<!--        <record id="view_repair_search" model="ir.ui.view">-->
-<!--            <field name="name">view.repair.search</field>-->
-<!--            <field name="model">repair</field>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <search string="Repair">-->
-<!--                    <field name="code"/>-->
-<!--                    <field name="date"/>-->
-<!--                    <field name="user_id"/>-->
-<!--                    <field name="state"/>-->
-<!--                </search>-->
-<!--            </field>-->
-<!--        </record>-->
+        <record id="view_repair_search" model="ir.ui.view">
+            <field name="name">view.repair.search</field>
+            <field name="model">repair</field>
+            <field name="arch" type="xml">
+                <search string="Repair">
+                    <field name="code"/>
+                    <field name="equipment_id"/>
+                    <field name="type_id"/>
+                    <field name="serial"/>
+                    <field name="state"/>
+                </search>
+            </field>
+        </record>
 
-<!--        <record id="action_repair" model="ir.actions.act_window">-->
-<!--            <field name="name">Repair</field>-->
-<!--            <field name="type">ir.actions.act_window</field>-->
-<!--            <field name="res_model">repair</field>-->
-<!--            <field name="view_type">form</field>-->
-<!--            <field name="view_mode">tree,form</field>-->
-<!--            <field name="filter" eval="True"/>-->
-<!--        </record>-->
+        <record id="action_repair" model="ir.actions.act_window">
+            <field name="name">Repair</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">repair</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="filter" eval="True"/>
+        </record>
+
     </data>
 </odoo>

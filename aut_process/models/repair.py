@@ -32,3 +32,6 @@ class Repair(models.Model):
         fields.Many2one('nomenclator',
                         string='Diagnosis',
                         domain=[('type_id.code', '=', 'diagnosis_type')])
+    state = fields.Selection([('draft', 'Draft')],
+                             string='State',
+                             default='draft')

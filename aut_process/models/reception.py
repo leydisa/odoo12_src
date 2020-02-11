@@ -6,6 +6,9 @@ from odoo import api, fields, models, tools, _
 from odoo.exceptions import ValidationError
 from .common import FIRST_CUSTOMER_NOTIFICATION
 
+from datetime import datetime
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+
 
 class Reception(models.Model):
     """
@@ -16,32 +19,29 @@ class Reception(models.Model):
     _description = 'Reception'
 
     @api.multi
-    @api.constrains('attachment_ids')
+    @api.constrains('repair_ids')
     def _check_data(self):
         """
         Check that the minimum number of photos of the open package is 3.
         :return:
         """
-        if len(self.attachment_ids) < 3:
-            raise ValidationError(_('At least 3 photos of the open package.'))
+        if len(self.repair_ids) == 0:
+            raise ValidationError(_('Required.'))
 
     code = fields.Char(string='Code',
                        required=True,
                        readonly=True,
                        default=_('New'))
-    date = fields.Date(string='Creation Date',
-                       readonly=True,
-                       index=True,
-                       default=fields.Date.today)
-    date_accept = fields.Date('Acceptance Date')
-    user_id = fields.Many2one('res.users',
-                              string='Created by',
-                              readonly=True,
-                              default=lambda self: self.env.user.id)
-    user_accept_id = fields.Many2one('res.users',
-                              string='Created by',
-                              readonly=True,
-                              default=lambda self: self.env.user.id)
+    received_date = fields.Date(string='Received Date',
+                                readonly=True)
+    received_by = fields.Many2one('res.users',
+                                  string='Received By',
+                                  readonly=True)
+    accepted_date = fields.Date('Accepted Date',
+                                readonly=True)
+    accepted_by = fields.Many2one('res.users',
+                                  string='Accepted By',
+                                  readonly=True)
     photo1 = fields.Binary("Photo 1")
     photo2 = fields.Binary("Photo 2")
     photo3 = fields.Binary("Photo 3")
@@ -90,7 +90,7 @@ class Reception(models.Model):
     @api.multi
     def write(self, vals):
         """
-
+        Reduce el tamaño de las imágenes.
         :param vals:
         :return:
         """
@@ -111,10 +111,14 @@ class Reception(models.Model):
     @api.one
     def action_received(self):
         """
-        Generate the RMA code.
+        Generate the code.
+        Se guarda usuario y fecha en que se recibe.
         Set to state received.
         :return:
         """
+        self.received_by = self.env.user
+        self.received_date = datetime.today().strftime(
+            DEFAULT_SERVER_DATETIME_FORMAT)
         self.code = self.env['ir.sequence'].next_by_code('reception.sequence')
         self.state = 'received'
 
@@ -129,9 +133,13 @@ class Reception(models.Model):
     @api.one
     def action_accepted(self):
         """
+        Se guarda usuario y fecha en que se acepta.
         Set to state accepted.
         :return:
         """
+        self.accepted_by = self.env.user
+        self.accepted_date = datetime.today().strftime(
+            DEFAULT_SERVER_DATETIME_FORMAT)
         self.state = 'accepted'
 
     def print_label(self):
@@ -140,7 +148,7 @@ class Reception(models.Model):
         :return:
         """
         self.ensure_one()
-        return self.env.ref('aut_process.report_repair_label_id'). \
+        return self.env.ref('aut_process.report_reception_label_id'). \
             report_action(None, data={})
 
     @api.multi
@@ -179,6 +187,6 @@ class ReceptionDDT(models.Model):
                        index=True,
                        default=fields.Date.today)
     verified = fields.Selection([('match', 'Match'),
-                               ('dont_match', "Don't Match")],
-                              string='Verified?',
-                              required=True)
+                                 ('dont_match', "Don't Match")],
+                                string='Verified?',
+                                required=True)

@@ -3,14 +3,14 @@
     <data>
 
         <record id="view_reception_tree" model="ir.ui.view">
-            <field name="name">view.repair.tree</field>
+            <field name="name">view.reception.tree</field>
             <field name="model">reception</field>
             <field eval="8" name="priority"/>
             <field name="arch" type="xml">
                 <tree string="Reception" decoration-warning="state in ('started', 'received', 'in_acceptance')" decoration-success="state=='accepted'" duplicate="false">
                     <field name="code"/>
-                    <field name="date"/>
-                    <field name="user_id"/>
+                    <field name="received_date"/>
+                    <field name="received_by"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -29,23 +29,25 @@
                         <button name="send_first_notification" string="Send First Notification"  type="object" class="btn-primary"/>
                         <field name="state" widget="statusbar" statusbar_visible="started, received, in_acceptance, accepted" />
                     </header>
-                    <notepad>
+                    <notebook>
                         <page string="General">
                             <group col="12">
                                 <field name="code" colspan="2"/>
-                                <field name="user_id" colspan="6"/>
-                                <field name="date" colspan="4"/>
+                                <field name="received_by" colspan="6"/>
+                                <field name="received_date" colspan="4"/>
                                 <separator colspan="2"/>
-                                <field name="user_accept_id" colspan="6"/>
-                                <field name="date_accept" colspan="4"/>
-                                <field name="customer_id" colspan="12" options="{'no_open': True, 'no_create_edit': True}" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
+                                <field name="accepted_by" colspan="6"/>
+                                <field name="accepted_date" colspan="4"/>
+                                <hr colspan="12"/>
+                                <field name="customer_id" colspan="6" options="{'no_open': True, 'no_create_edit': True}" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
+                                <separator colspan="6"/>
                                 <label for="photo1" string="Photos of the closed package"/>
-                                <field name="photo1" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo1", "size": [130,130]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
-                                <field name="photo2" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo2", "size": [130,130]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
-                                <field name="photo3" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo3", "size": [130,130]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
-                                <field name="photo4" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo4", "size": [130,130]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
-                                <field name="photo5" widget="image" class="oe_right oe_avatar"  options='{"preview_image": "photo5", "size": [130,130]}' colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
-                                <field name="ddt_ids" colspan="12" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}">
+                                <field name="photo1" widget="image" class="oe_right oe_avatar" colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}" options='{"preview_image": "photo1", "size": [130,130]}'/>
+                                <field name="photo2" widget="image" class="oe_right oe_avatar" colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}" options='{"preview_image": "photo2", "size": [130,130]}'/>
+                                <field name="photo3" widget="image" class="oe_right oe_avatar" colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}" options='{"preview_image": "photo3", "size": [130,130]}'/>
+                                <field name="photo4" widget="image" class="oe_right oe_avatar" colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}" options='{"preview_image": "photo4", "size": [130,130]}'/>
+                                <field name="photo5" widget="image" class="oe_right oe_avatar" colspan="2" nolabel="1" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}" options='{"preview_image": "photo5", "size": [130,130]}'/>
+                                <field name="ddt_ids" colspan="12" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','in', ('received', 'accepted'))]}">
                                     <tree editable="bottom">
                                         <field name="ddt"/>
                                         <field name="date"/>
@@ -54,11 +56,13 @@
                                     </tree>
                                 </field>
                                 <field name="attachment_ids" widget="many2many_binary" colspan="12" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}"/>
-                                <field name="repair_ids" colspan="12" attrs="{'required': [('state','=', 'started')], 'readonly': [('state','!=', 'started')]}">
+                                <field name="repair_ids" colspan="12" attrs="{'required': [('state','=', 'started')]}">
                                     <tree editable="bottom">
-                                        <field name="equipment_id" options="{'no_open': True, 'no_create_edit': True}"/>
+                                        <field name="equipment_id" options="{'no_open': True, 'no_create': True}"/>
                                         <field name="serial"/>
                                         <field name="type_id"/>
+                                        <field name="symptom_id" attrs="{'column_invisible': [('parent.state', 'in', ('started', 'received'))]}" context="{'hide_code': True}" options="{'no_open': True, 'no_create': True}"/>
+                                        <field name="diagnosis_id" attrs="{'column_invisible': [('parent.state', 'in', ('started', 'received'))]}" context="{'tree_view_ref': 'aut_process.view_diagnosis_tree'}" options="{'no_open': True, 'no_create': True}"/>
                                         <field name="reception_id" invisible="1"/>
                                     </tree>
                                 </field>
@@ -71,7 +75,7 @@
                                 <field name="contact_inf_address"/>
                             </group>
                         </page>
-                    </notepad>
+                    </notebook>
                 </form>
             </field>
         </record>
@@ -82,8 +86,8 @@
             <field name="arch" type="xml">
                 <search string="Reception">
                     <field name="code"/>
-                    <field name="date"/>
-                    <field name="user_id"/>
+                    <field name="received_date"/>
+                    <field name="received_by"/>
                     <field name="state"/>
                 </search>
             </field>

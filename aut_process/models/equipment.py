@@ -27,6 +27,17 @@ class Equipment(models.Model):
     _sql_constraints = [
         ('serial_uniq', 'unique (serial)',
          'The serial must be unique!'),
-        ('description__uniq', 'unique (description)',
-         'The description must be unique!')
+        ('name_uniq', 'unique (name)',
+         'The name must be unique!')
     ]
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        """
+        Search by name and series.
+        """
+        args = args or []
+        args += ['|', ('serial', operator, name), ('name', operator, name)]
+        print(args)
+        recs = self.search(args, limit=limit)
+        return recs.name_get()

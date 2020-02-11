@@ -9,7 +9,7 @@
 
         <menuitem id="menu_post_sale" parent="menu_aut_process" name="Post Sale" sequence="20"/>
                 <menuitem id="menu_reception" parent="menu_post_sale" name="Reception" sequence="10" action="action_reception"/>
-<!--            <menuitem id="menu_repair" parent="menu_post_sale" name="Repair" sequence="10" action="action_repair"/>-->
+                <menuitem id="menu_repair" parent="menu_post_sale" name="Repair" sequence="20" action="action_repair"/>
 
         <menuitem id="menu_report" parent="menu_aut_process" name="Report" sequence="30"/>
             <menuitem id="menu_user" parent="menu_report" name="Users" sequence="10" action="action_reception"/>
