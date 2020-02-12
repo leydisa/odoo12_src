@@ -75,6 +75,9 @@ class Reception(models.Model):
     contact_inf_name = fields.Char('Name')
     contact_inf_email = fields.Char('Email')
     contact_inf_address = fields.Char('Address')
+    notification_ids = fields.One2many('mail.message', 'res_id',
+                                       string='Notifications',
+                                       domain=[('model', '=', 'reception')])
     state = fields.Selection([('started', 'Started'),
                               ('received', 'Received'),
                               ('in_acceptance', 'In Acceptance'),
@@ -150,6 +153,42 @@ class Reception(models.Model):
         self.ensure_one()
         return self.env.ref('aut_process.report_reception_label_id'). \
             report_action(None, data={})
+
+    @api.multi
+    def action_send_ddt_error_notification(self):
+        """
+        Notifica al cliente
+        :return:
+        """
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('aut_process','email_template_reception_ddt_error')[1]
+        except ValueError:
+            template_id = False
+        try:
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
+        except ValueError:
+            compose_form_id = False
+        ctx = {
+            'default_model': 'reception',
+            'default_res_id': self.ids[0],
+            'default_use_template': bool(template_id),
+            'default_template_id': template_id,
+            'default_composition_mode': 'comment',
+            'mark_so_as_sent': True,
+            'force_email': True
+        }
+        return {
+            'type': 'ir.actions.act_window',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'res_model': 'mail.compose.message',
+            'views': [(compose_form_id, 'form')],
+            'view_id': compose_form_id,
+            'target': 'new',
+            'context': ctx,
+        }
 
     @api.multi
     def send_first_notification(self):

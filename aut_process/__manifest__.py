@@ -13,9 +13,9 @@
     'demo': [
     ],
     'depends': [
-        'base_setup',
+        'base',
         'resource',
-        'website_mail',
+        'mail',
         'web',
     ],
     'data': [

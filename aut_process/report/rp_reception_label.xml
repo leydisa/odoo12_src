@@ -9,39 +9,39 @@
 
                         <div>
                             <strong>Date</strong>:
-                            <span t-esc="o.date"/>
+<!--                            <span t-esc="o.date"/>-->
                         </div>
                         <div>
                             <strong>Acceptance Date</strong>:
-                            <span t-esc="o.date_accept"/>
+<!--                            <span t-esc="o.date_accept"/>-->
                         </div>
                         <div>
                             <strong>Customer</strong>:
-                            <span t-esc="o.customer_id.name"/>
+<!--                            <span t-esc="o.customer_id.name"/>-->
                         </div>
 
-                        <table class="table table-bordered table-sm" style="width:100%">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th class="text-left">Serial</th>
-                                    <th class="text-left">Type</th>
-                                    <th class="text-left">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr t-foreach="o.equipment_ids" t-as="equipment">
-                                    <td class="text-left">
-                                        <span t-esc="equipment.equipment_id.serial"/>
-                                    </td>
-                                    <td class="text-left">
-                                        <span t-esc="equipment.type_id.name"/>
-                                    </td>
-                                    <td class="text-left">
-                                        <span t-esc="equipment.description"/>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+<!--                        <table class="table table-bordered table-sm" style="width:100%">-->
+<!--                            <thead class="thead-light">-->
+<!--                                <tr>-->
+<!--                                    <th class="text-left">Serial</th>-->
+<!--                                    <th class="text-left">Type</th>-->
+<!--                                    <th class="text-left">Description</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                <tr t-foreach="o.equipment_ids" t-as="equipment">-->
+<!--                                    <td class="text-left">-->
+<!--                                        <span t-esc="equipment.equipment_id.serial"/>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-left">-->
+<!--                                        <span t-esc="equipment.type_id.name"/>-->
+<!--                                    </td>-->
+<!--                                    <td class="text-left">-->
+<!--                                        <span t-esc="equipment.description"/>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
 
                     </div>
                 </t>
