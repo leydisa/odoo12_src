@@ -15,6 +15,8 @@ class Repair(models.Model):
 
     reception_id = fields.Many2one('reception',
                                    ondelete='cascade')
+    received_date = fields.Date(related='reception_id.received_date')
+    accepted_date = fields.Date(related='reception_id.accepted_date')
     code = fields.Char(string='Code',
                        required=True,
                        readonly=True,
@@ -32,6 +34,19 @@ class Repair(models.Model):
         fields.Many2one('nomenclator',
                         string='Diagnosis',
                         domain=[('type_id.code', '=', 'diagnosis_type')])
-    state = fields.Selection([('draft', 'Draft')],
-                             string='State',
+    diagnosis_level1_id = \
+        fields.Many2one('nomenclator',
+                        string='Diagnosis',
+                        domain=[('type_id.code', '=', 'diagnosis_type')])
+    diagnosis_level2_id = \
+        fields.Many2one('nomenclator',
+                        string='Diagnosis',
+                        domain=[('type_id.code', '=', 'diagnosis_type')])
+    diagnosis_level2_id = \
+        fields.Many2one('nomenclator',
+                        string='Diagnosis',
+                        domain=[('type_id.code', '=', 'diagnosis_type')])
+
+    state = fields.Selection([('no_started', 'Draft')],
+                             string='',
                              default='draft')

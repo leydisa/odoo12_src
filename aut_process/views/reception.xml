@@ -2,49 +2,6 @@
 <odoo>
     <data>
 
-        <record id="email_template_reception_ddt_error" model="mail.template">
-            <field name="name">Reception DDT Error</field>
-            <field name="email_from">${object.customer_id.email}</field>
-            <field name="email_to">${object.customer_id.email}</field>
-            <field name="subject">Reception DDT Error</field>
-            <field name="report_template" ref="report_reception_label_id"/>
-            <field name="model_id" ref="aut_process.model_reception"/>
-            <field name="auto_delete" eval="True"/>
-            <field name="body_html"><![CDATA[
-            <p>
-            Hello ${object.customer_id.name},<br/>
-            <br/>
-            The content of the package does not match what is reported in the DDT. Therefore, the packing list is attached to the email as a reference.
-            </p>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-2">
-                      Equipo
-                    </div>
-                    <div class="col-sm-2">
-                      Serie
-                    </div>
-                    <div class="col-sm-2">
-                      Tipo
-                    </div>
-                </div>
-                % for repair in object.repair_ids:
-                <div class="row">
-                    <div class="col-sm-2">
-                      ${repair.equipment_id.name}
-                    </div>
-                    <div class="col-sm-2">
-                      ${repair.serial}
-                    </div>
-                    <div class="col-sm-2">
-                      ${repair.type_id.name}
-                    </div>
-                </div>
-                % endfor
-            </div>
-            ]]></field>
-        </record>
-
         <record id="view_reception_tree" model="ir.ui.view">
             <field name="name">view.reception.tree</field>
             <field name="model">reception</field>
@@ -68,9 +25,8 @@
                         <button name="action_received" string="Received" states="started" type="object" class="oe_highlight"/>
                         <button name="action_in_acceptance" string="In Acceptance" states="received" type="object" class="oe_highlight"/>
                         <button name="action_accepted" string="Accepted" states="in_acceptance" type="object" class="oe_highlight"/>
-                        <button name="print_reception_label" string="Print Reception Label" states="in_acceptance"  type="object" class="btn-primary"/>
-                        <button name="send_first_notification" string="Send First Notification"  type="object" class="btn-primary"/>
-                        <button name="action_send_ddt_error_notification" string="DDT Error Notification"  type="object" class="btn-primary"/>
+                        <button name="action_send_ddt_error_notification" string="DDT Error Notification" states="in_acceptance" type="object" class="btn-primary"/>
+                        <button name="print_reception_label" string="Print Reception Label" states="accepted"  type="object" class="btn-primary"/>
                         <field name="state" widget="statusbar" statusbar_visible="started, received, in_acceptance, accepted" />
                     </header>
                     <notebook>

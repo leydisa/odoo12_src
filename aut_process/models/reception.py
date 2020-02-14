@@ -4,7 +4,6 @@
 
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import ValidationError
-from .common import FIRST_CUSTOMER_NOTIFICATION
 
 from datetime import datetime
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -17,6 +16,21 @@ class Reception(models.Model):
     _name = 'reception'
     _rec_name = 'code'
     _description = 'Reception'
+
+    def _send_first_notification(self):
+        """
+        Send the first notification to the customer.
+        :return:
+        """
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('aut_process', 'email_template_reception_first_customer_notification')[1]
+        except ValueError:
+            template_id = False
+        self.env['mail.template'].browse(template_id).send_mail(self.id,
+                                                                force_send=True)
+        return True
 
     @api.multi
     @api.constrains('repair_ids')
@@ -93,7 +107,7 @@ class Reception(models.Model):
     @api.multi
     def write(self, vals):
         """
-        Reduce el tamaño de las imágenes.
+        Reduce the size of the images.
         :param vals:
         :return:
         """
@@ -115,7 +129,7 @@ class Reception(models.Model):
     def action_received(self):
         """
         Generate the code.
-        Se guarda usuario y fecha en que se recibe.
+        User is saved and date received.
         Set to state received.
         :return:
         """
@@ -136,18 +150,19 @@ class Reception(models.Model):
     @api.one
     def action_accepted(self):
         """
-        Se guarda usuario y fecha en que se acepta.
+        User is saved and date accepted.
         Set to state accepted.
         :return:
         """
         self.accepted_by = self.env.user
         self.accepted_date = datetime.today().strftime(
             DEFAULT_SERVER_DATETIME_FORMAT)
+        self._send_first_notification()
         self.state = 'accepted'
 
-    def print_label(self):
+    def print_reception_label(self):
         """
-        Imprime las etiqueta.
+        Print the labels.
         :return:
         """
         self.ensure_one()
@@ -189,25 +204,6 @@ class Reception(models.Model):
             'target': 'new',
             'context': ctx,
         }
-
-    @api.multi
-    def send_first_notification(self):
-        """
-        :return:
-        """
-        self.ensure_one()
-        mails = self.env['mail.mail']
-        mail_values = {
-            'email_from': 'leydisa@gmail.com',
-            'email_to': 'leydisa@gmail.com',
-            'subject': 'First Customer Notification',
-            'body_html': FIRST_CUSTOMER_NOTIFICATION,
-            'notification': True,
-            'mailing_id': self.id}
-        mail = self.env['mail.mail'].create(mail_values)
-        mails |= mail
-        mails.send()
-        return True
 
 
 class ReceptionDDT(models.Model):

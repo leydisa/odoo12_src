@@ -22,6 +22,7 @@
         'data/data.xml',
         'data/sequence.xml',
         'data/paper_format.xml',
+        'data/mail_template.xml',
 
         'security/security.xml',
         'security/ir.model.access.csv',
