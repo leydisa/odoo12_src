@@ -105,7 +105,7 @@
             <field name="email_to">${object.customer_id.email}</field>
             <field name="subject">Reception DDT Error</field>
             <field name="model_id" ref="aut_process.model_reception"/>
-            <field name="auto_delete" eval="True"/>
+            <field name="auto_delete" eval="False"/>
             <field name="body_html"><![CDATA[
                     <p>
                     Hello ${object.customer_id.name},<br/>
@@ -141,6 +141,49 @@
                     ]]></field>
         </record>
 
+        <record id="email_template_contact_request_form" model="mail.template">
+            <field name="name">Contact Request Form</field>
+            <field name="email_from">${object.reception_id.customer_id.email}</field>
+            <field name="email_to">${object.reception_id.customer_id.email}</field>
+            <field name="subject">Contact Request Form</field>
+            <field name="model_id" ref="aut_process.model_repair"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+            <h2>Contact Request Form for Sending Notifications or Expeditions</h2>
+            <h3>Complete in case of shipment of goods for repairs</h3>
+
+            <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2 mb16 mt16">
+            </div>
+            </div>
+
+             <table class="table table-sm" style="border: 1px solid; border-collapse: collapse;">
+             <tbody>
+               <tr style="border: 1px solid">
+                 <td width="180px" style="border: 1px solid; text-align: left;"><b>RMA Code:</b></td>
+                 <td width="450px" style="border: 1px solid"></td>
+               </tr>
+               <tr style="border: 1px solid">
+                 <td style="border: 1px solid; text-align: left;"><b>Name:</b></td>
+                 <td style="border: 1px solid"></td>
+               </tr>
+               <tr style="border: 1px solid">
+                 <td style="border: 1px solid; text-align: left;"><b>Lastname:</b></td>
+                 <td style="border: 1px solid"></td>
+               </tr>
+               <tr style="border: 1px solid">
+                 <td style="border: 1px solid; text-align: left;"><b>Email (reference):</b></td>
+                 <td style="border: 1px solid"></td>
+               </tr>
+               <tr style="border: 1px solid">
+                 <td style="border: 1px solid;text-align: left;"><b>Shipping Address:</b></td>
+                 <td style="border: 1px solid"></td>
+               </tr>
+             </tbody>
+           </table>
+        ]]></field>
+        </record>
 
     </data>
 </odoo>

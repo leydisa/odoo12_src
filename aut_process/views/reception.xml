@@ -77,10 +77,11 @@
                         </page>
                         <page string="Notifications">
                             <group>
-                                <field name="notification_ids">
+                                <field name="notification_ids" context="{'form_view_ref': 'aut_process.view_message_short_form'}">
                                     <tree create="0" edit="0" delete="0">
                                         <field name="date"/>
                                         <field name="subject"/>
+                                        <field name="email_from"/>
                                         <field name="author_id"/>
                                         <field name="model" invisible="1"/>
                                         <field name="res_id" invisible="1"/>

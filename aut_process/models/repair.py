@@ -13,23 +13,9 @@ class Repair(models.Model):
     Class representing the equipment of a repair.
     """
     _name = 'repair'
+    _inherit = 'notification'
     _rec_name = 'code'
     _description = 'Repair'
-
-    def _send_second_notification(self):
-        """
-        Send the second notification to the customer.
-        :return:
-        """
-        self.ensure_one()
-        ir_model_data = self.env['ir.model.data']
-        try:
-            template_id = ir_model_data.get_object_reference('aut_process', 'email_template_second_customer_notification')[1]
-        except ValueError:
-            template_id = False
-        self.env['mail.template'].browse(template_id).send_mail(self.id,
-                                                                force_send=True)
-        return True
 
     reception_id = fields.Many2one('reception',
                                    readonly=True,
@@ -93,5 +79,6 @@ class Repair(models.Model):
         """
         self.repair_by = self.env.user.id
         self.repair_date = datetime.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
-        self._send_second_notification()
+        self._send_notification('email_template_second_customer_notification')
+        self._send_notification('email_template_contact_request_form')
         self.state = 'finished'

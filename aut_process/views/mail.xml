@@ -11,12 +11,12 @@
                 <form string="Message">
                     <sheet>
                         <group>
-                            <field name="subject"/>
-                            <field name="date"/>
-                            <field name="email_from"/>
-                            <field name="author_id"/>
+                            <field name="subject" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="email_from" readonly="1"/>
+                            <field name="author_id" readonly="1"/>
                             <hr colspan="2"/>
-                            <field name="body" nolabel="1" colspan="2" options="{'style-inline': true}"/>
+                            <field name="body" nolabel="1" colspan="2" options="{'style-inline': true}" readonly="1"/>
                         </group>
                     </sheet>
                 </form>
