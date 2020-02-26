@@ -4,6 +4,9 @@
 
 from odoo import api, fields, models, tools, _
 
+from datetime import datetime
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+
 
 class Repair(models.Model):
     """
@@ -13,18 +16,37 @@ class Repair(models.Model):
     _rec_name = 'code'
     _description = 'Repair'
 
+    def _send_second_notification(self):
+        """
+        Send the second notification to the customer.
+        :return:
+        """
+        self.ensure_one()
+        ir_model_data = self.env['ir.model.data']
+        try:
+            template_id = ir_model_data.get_object_reference('aut_process', 'email_template_second_customer_notification')[1]
+        except ValueError:
+            template_id = False
+        self.env['mail.template'].browse(template_id).send_mail(self.id,
+                                                                force_send=True)
+        return True
+
     reception_id = fields.Many2one('reception',
+                                   readonly=True,
                                    ondelete='cascade')
-    received_date = fields.Date(related='reception_id.received_date')
     accepted_date = fields.Date(related='reception_id.accepted_date')
+    accepted_by = fields.Many2one(related='reception_id.accepted_by')
     code = fields.Char(string='Code',
-                       required=True,
-                       readonly=True,
-                       default=_('New'))
+                       readonly=True)
+    repair_date = fields.Date('Repair Date',
+                              readonly=True)
+    repair_by = fields.Many2one('res.users',
+                                string='Repair By',
+                                readonly=True)
     equipment_id = fields.Many2one('equipment',
                                    string='Equipment',
                                    required=True)
-    type_id = fields.Many2one(related='equipment_id.type_id')
+    equipment_type_id = fields.Many2one(related='equipment_id.type_id')
     serial = fields.Char(related='equipment_id.serial')
     symptom_id = \
         fields.Many2one('nomenclator',
@@ -36,17 +58,40 @@ class Repair(models.Model):
                         domain=[('type_id.code', '=', 'diagnosis_type')])
     diagnosis_level1_id = \
         fields.Many2one('nomenclator',
-                        string='Diagnosis',
+                        string='Diagnosis Level 1',
                         domain=[('type_id.code', '=', 'diagnosis_type')])
     diagnosis_level2_id = \
         fields.Many2one('nomenclator',
-                        string='Diagnosis',
+                        string='Diagnosis Level 2',
                         domain=[('type_id.code', '=', 'diagnosis_type')])
-    diagnosis_level2_id = \
-        fields.Many2one('nomenclator',
-                        string='Diagnosis',
-                        domain=[('type_id.code', '=', 'diagnosis_type')])
+    repair_type = fields.Selection([('A', 'A: Mild Entity (new tests, replacement of worn out external parts, battery recharge, etc.)'),
+                                    ('B', 'B: Medium Entity (electronic card replacement)'),
+                                    ('C', 'C: Serious Entity (device replacement)')],
+                                   string='Repair Type')
+    notification_ids = fields.One2many('mail.message', 'res_id',
+                                       string='Notifications',
+                                       domain=[('model', '=', 'repair')])
+    state = fields.Selection([('not_started', 'Not Started'),
+                              ('in_process', 'In Process'),
+                              ('finished', 'Finished')],
+                             string='State',
+                             default='not_started')
 
-    state = fields.Selection([('no_started', 'Draft')],
-                             string='',
-                             default='draft')
+    @api.one
+    def action_in_process(self):
+        """
+        Set to state in_process.
+        :return:
+        """
+        self.state = 'in_process'
+
+    @api.one
+    def action_finished(self):
+        """
+        Set to state finished.
+        :return:
+        """
+        self.repair_by = self.env.user.id
+        self.repair_date = datetime.today().strftime(DEFAULT_SERVER_DATE_FORMAT)
+        self._send_second_notification()
+        self.state = 'finished'

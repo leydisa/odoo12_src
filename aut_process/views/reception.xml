@@ -60,7 +60,7 @@
                                     <tree editable="bottom">
                                         <field name="equipment_id" options="{'no_open': True, 'no_create': True}"/>
                                         <field name="serial"/>
-                                        <field name="type_id"/>
+                                        <field name="equipment_type_id"/>
                                         <field name="symptom_id" attrs="{'column_invisible': [('parent.state', 'in', ('started', 'received'))]}" context="{'hide_code': True}" options="{'no_open': True, 'no_create': True}"/>
                                         <field name="diagnosis_id" attrs="{'column_invisible': [('parent.state', 'in', ('started', 'received'))]}" context="{'tree_view_ref': 'aut_process.view_diagnosis_tree'}" options="{'no_open': True, 'no_create': True}"/>
                                         <field name="reception_id" invisible="1"/>

@@ -30,6 +30,7 @@
         'report/report.xml',
         'report/rp_reception_label.xml',
 
+        'views/mail.xml',
         'views/nomenclator.xml',
         'views/diagnosis.xml',
         'views/equipment.xml',

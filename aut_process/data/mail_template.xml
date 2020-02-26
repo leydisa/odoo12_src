@@ -2,7 +2,7 @@
 <odoo>
     <data noupdate="0">
 
-       <record id="email_template_reception_first_customer_notification" model="mail.template">
+        <record id="email_template_first_customer_notification" model="mail.template">
             <field name="name">Reception First Notification</field>
             <field name="email_from">${object.customer_id.email}</field>
             <field name="email_to">${object.customer_id.email}</field>
@@ -36,7 +36,7 @@
                       ${repair.serial}
                     </div>
                     <div class="col-sm-2">
-                      ${repair.type_id.name}
+                      ${repair.equipment_type_id.name}
                     </div>
                 </div>
                 % endfor
@@ -58,6 +58,47 @@
             ]]></field>
         </record>
 
+        <record id="email_template_second_customer_notification" model="mail.template">
+            <field name="name">Reception Second Notification</field>
+            <field name="email_from">${object.reception_id.customer_id.email}</field>
+            <field name="email_to">${object.reception_id.customer_id.email}</field>
+            <field name="subject">Second Customer Notification</field>
+            <field name="model_id" ref="aut_process.model_repair"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html"><![CDATA[
+            <p>Dear Customer,</p>
+
+            </p>We confirm that his following apparatus:</p>
+
+            <table class="table table-sm">
+              <tbody>
+                <tr>
+                  <th scope="row">Name:</th>
+                  <td>${object.equipment_id.name}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Type:</th>
+                  <td>${object.equipment_id.type_id.name}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Serial:</th>
+                  <td>${object.equipment_id.serial}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p>It has been repaired on ${object.repair_date} with the following diagnosis: ${object.diagnosis_id.name}</p>
+
+            <p>Your indication of symptom is congruent with the fault found in the analysis phase; therefore, it was decided to carry out the following repair:
+            Which provides a repair balance of xxx, xxx €.</p>
+
+            <p>We inform you that the repaired device has been shipped with the courier xxx, and the tracking number is xxx.
+            Remember that you can view the traceability of your package directly on the courier's website, by entering the tracking number.</p>
+
+            <p>Best regards,</p>
+            ]]></field>
+        </record>
+
         <record id="email_template_reception_ddt_error" model="mail.template">
             <field name="name">Reception DDT Error</field>
             <field name="email_from">${object.customer_id.email}</field>
@@ -66,39 +107,40 @@
             <field name="model_id" ref="aut_process.model_reception"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html"><![CDATA[
-            <p>
-            Hello ${object.customer_id.name},<br/>
-            <br/>
-            The content of the package does not match what is reported in the DDT. Therefore, the packing list is attached to the email as a reference.
-            </p>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-2">
-                      Equipo
+                    <p>
+                    Hello ${object.customer_id.name},<br/>
+                    <br/>
+                    The content of the package does not match what is reported in the DDT. Therefore, the packing list is attached to the email as a reference.
+                    </p>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-2">
+                              Equipo
+                            </div>
+                            <div class="col-sm-2">
+                              Serie
+                            </div>
+                            <div class="col-sm-2">
+                              Tipo
+                            </div>
+                        </div>
+                        % for repair in object.repair_ids:
+                        <div class="row">
+                            <div class="col-sm-2">
+                              ${repair.equipment_id.name}
+                            </div>
+                            <div class="col-sm-2">
+                              ${repair.serial}
+                            </div>
+                            <div class="col-sm-2">
+                              ${repair.type_id.name}
+                            </div>
+                        </div>
+                        % endfor
                     </div>
-                    <div class="col-sm-2">
-                      Serie
-                    </div>
-                    <div class="col-sm-2">
-                      Tipo
-                    </div>
-                </div>
-                % for repair in object.repair_ids:
-                <div class="row">
-                    <div class="col-sm-2">
-                      ${repair.equipment_id.name}
-                    </div>
-                    <div class="col-sm-2">
-                      ${repair.serial}
-                    </div>
-                    <div class="col-sm-2">
-                      ${repair.type_id.name}
-                    </div>
-                </div>
-                % endfor
-            </div>
-            ]]></field>
+                    ]]></field>
         </record>
+
 
     </data>
 </odoo>

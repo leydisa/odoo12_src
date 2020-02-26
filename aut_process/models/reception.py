@@ -25,7 +25,7 @@ class Reception(models.Model):
         self.ensure_one()
         ir_model_data = self.env['ir.model.data']
         try:
-            template_id = ir_model_data.get_object_reference('aut_process', 'email_template_reception_first_customer_notification')[1]
+            template_id = ir_model_data.get_object_reference('aut_process', 'email_template_first_customer_notification')[1]
         except ValueError:
             template_id = False
         self.env['mail.template'].browse(template_id).send_mail(self.id,
@@ -133,9 +133,8 @@ class Reception(models.Model):
         Set to state received.
         :return:
         """
-        self.received_by = self.env.user
-        self.received_date = datetime.today().strftime(
-            DEFAULT_SERVER_DATETIME_FORMAT)
+        self.received_by = self.env.user.id
+        self.received_date = datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         self.code = self.env['ir.sequence'].next_by_code('reception.sequence')
         self.state = 'received'
 
@@ -154,9 +153,11 @@ class Reception(models.Model):
         Set to state accepted.
         :return:
         """
-        self.accepted_by = self.env.user
-        self.accepted_date = datetime.today().strftime(
-            DEFAULT_SERVER_DATETIME_FORMAT)
+        for repair in self.repair_ids:
+            code = self.env['ir.sequence'].next_by_code('repair.sequence')
+            repair.write({'code': code})
+        self.accepted_by = self.env.user.id
+        self.accepted_date = datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         self._send_first_notification()
         self.state = 'accepted'
 

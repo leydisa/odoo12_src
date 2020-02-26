@@ -9,8 +9,9 @@
             <field name="arch" type="xml">
                 <tree string="Repair">
                     <field name="code"/>
+                    <field name="repair_date"/>
                     <field name="equipment_id"/>
-                    <field name="type_id"/>
+                    <field name="equipment_type_id"/>
                     <field name="serial"/>
                     <field name="state"/>
                 </tree>
@@ -23,14 +24,47 @@
             <field name="arch" type="xml">
                 <form string="Repair">
                     <header>
-                        <field name="state" widget="statusbar" statusbar_visible="draft, received, closed, closed" />
+                        <button name="action_in_process" string="In Process" states="not_started" type="object" class="oe_highlight"/>
+                        <button name="action_finished" string="Finished" states="in_process" type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar" statusbar_visible="not_started, in_process, finished" />
                     </header>
-                    <sheet>
-                        <group col="12">
-                            <field name="code" colspan="2"/>
-                            <sepatator colspan="10"/>
-                        </group>
-                    </sheet>
+                    <notebook>
+                        <page string="General">
+                            <group col="12">
+                                <field name="code" colspan="2"/>
+                                <field name="repair_by" colspan="6"/>
+                                <field name="repair_date" colspan="4"/>
+                            </group>
+                            <hr/>
+                            <group col="12" string="Reception">
+                                <field name="reception_id" colspan="2"/>
+                                <field name="accepted_by" colspan="6"/>
+                                <field name="accepted_date" colspan="4"/>
+                                <field name="equipment_id" colspan="12" readonly="1"/>
+                                <field name="symptom_id" colspan="6" readonly="1"/>
+                                <field name="diagnosis_id" colspan="6" readonly="1"/>
+                            </group>
+                            <hr/>
+                            <group col="12" string="Repair">
+                                <field name="diagnosis_level1_id" colspan="12" attrs="{'required': [('state','=', 'in_process')], 'readonly': [('state','!=', 'in_process')]}"/>
+                                <field name="diagnosis_level2_id" colspan="12" attrs="{'required': [('state','=', 'in_process')], 'readonly': [('state','!=', 'in_process')]}"/>
+                                <field name="repair_type" colspan="12" attrs="{'required': [('state','=', 'in_process')], 'readonly': [('state','!=', 'in_process')]}"/>
+                            </group>
+                        </page>
+                        <page string="Notifications">
+                            <group>
+                                <field name="notification_ids" context="{'form_view_ref': 'aut_process.view_message_short_form'}">
+                                    <tree create="0" edit="0" delete="0">
+                                        <field name="date"/>
+                                        <field name="subject"/>
+                                        <field name="author_id"/>
+                                        <field name="model" invisible="1"/>
+                                        <field name="res_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
                 </form>
             </field>
         </record>
@@ -41,9 +75,11 @@
             <field name="arch" type="xml">
                 <search string="Repair">
                     <field name="code"/>
+                    <field name="repair_date"/>
                     <field name="equipment_id"/>
-                    <field name="type_id"/>
+                    <field name="equipment_type_id"/>
                     <field name="serial"/>
+                    <field name="repair_type"/>
                     <field name="state"/>
                 </search>
             </field>
@@ -56,6 +92,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="filter" eval="True"/>
+            <field name="domain">[('code','!=',False)]</field>
         </record>
 
     </data>

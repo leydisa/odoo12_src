@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- mail.message form: short view !-->
+        <record model="ir.ui.view" id="view_message_short_form">
+            <field name="name">mail.message.short.form</field>
+            <field name="model">mail.message</field>
+            <field name="priority">30</field>
+            <field name="arch" type="xml">
+                <form string="Message">
+                    <sheet>
+                        <group>
+                            <field name="subject"/>
+                            <field name="date"/>
+                            <field name="email_from"/>
+                            <field name="author_id"/>
+                            <hr colspan="2"/>
+                            <field name="body" nolabel="1" colspan="2" options="{'style-inline': true}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
